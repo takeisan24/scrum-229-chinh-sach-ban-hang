@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Skeleton from '@mui/material/Skeleton';
 import { getProjectPolicy } from '../../../api/contents';
 import { useRequest } from '../../../hooks/useRequest';
-import PolicyContent from './PolicyContent';
+import PolicyContent from '../../../components/PolicyContent';
 
 interface PolicyPanelProps {
   projectId: number;

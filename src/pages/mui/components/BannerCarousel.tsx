@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import { BANNER_PLACEHOLDER_BG, colors } from '../../../constants/designTokens';
+import { useSnapCarousel } from '../../../hooks/useSnapCarousel';
 
 interface BannerCarouselProps {
   images: string[];
@@ -13,19 +13,7 @@ interface BannerCarouselProps {
  * Cham chi bao vi tri + bam de chuyen anh. Khong tu chay (Figma khong yeu cau).
  */
 export default function BannerCarousel({ images, alt }: BannerCarouselProps) {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-
-  const handleScroll = () => {
-    const track = trackRef.current;
-    if (!track) return;
-    setActive(Math.round(track.scrollLeft / track.clientWidth));
-  };
-
-  const goTo = (index: number) => {
-    const track = trackRef.current;
-    track?.scrollTo({ left: index * track.clientWidth, behavior: 'smooth' });
-  };
+  const { trackRef, active, onScroll: handleScroll, goTo } = useSnapCarousel();
 
   return (
     <Box

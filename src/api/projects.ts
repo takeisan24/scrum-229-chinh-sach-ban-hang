@@ -1,7 +1,18 @@
 import { getData } from './client';
-import type { ProjectDetail } from '../types/project';
+import { buildProjectSlug, slugSearchQueries } from '../lib/projectSlug';
+import type { Project } from '../types/project';
 
-/** Khong tim thay du an -> BE tra HTTP 404 + code RESOURCE_NOT_FOUND (getData nem ApiError). */
-export function getProjectDetail(id: number, signal?: AbortSignal) {
-  return getData<ProjectDetail>('/portal/projects/detail', { id }, signal);
+/** GET /portal/projects/search — tim theo ten, khong phan biet dau. */
+export function searchProjects(name: string, signal?: AbortSignal) {
+  return getData<Project[]>('/portal/projects/search', { name, pageSize: 50 }, signal);
+}
+
+/** Tra du an tu slug (xem slugSearchQueries). Tra null neu khong co du an nao co slug khop. */
+export async function findProjectBySlug(slug: string, signal?: AbortSignal): Promise<Project | null> {
+  for (const query of slugSearchQueries(slug)) {
+    const projects = (await searchProjects(query, signal)) ?? [];
+    const match = projects.find((project) => buildProjectSlug(project) === slug);
+    if (match) return match;
+  }
+  return null;
 }

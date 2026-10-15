@@ -1,17 +1,12 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
+import { useRef, useState, type ReactNode } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import { colors } from '../../../constants/designTokens';
-import {
-  DEFAULT_TAB_ID,
-  POLICY_TAB_ID,
-  PROJECT_TABS,
-  isProjectTabId,
-  type ProjectTabId,
-} from '../../../constants/projectTabs';
+import { POLICY_TAB_ID, PROJECT_TABS } from '../../../constants/projectTabs';
+import { useHashTab, useScrollToTabsOnLoad } from '../../../hooks/useHashTab';
 import BannerCarousel from './BannerCarousel';
 import ProjectTabs from './ProjectTabs';
 import ShareButton from './ShareButton';
@@ -31,17 +26,6 @@ interface ProjectViewProps {
   renderPolicy: () => ReactNode;
 }
 
-/** Tab dang chon luu tren hash URL de link chia se `#chinh-sach-ban-hang` mo dung tab. */
-function useHashTab(): [ProjectTabId, (id: ProjectTabId) => void] {
-  const { hash } = useLocation();
-  const navigate = useNavigate();
-  const fromHash = hash.slice(1);
-  const activeTab = isProjectTabId(fromHash) ? fromHash : DEFAULT_TAB_ID;
-
-  const setActiveTab = (id: ProjectTabId) => navigate({ hash: id }, { replace: true });
-  return [activeTab, setActiveTab];
-}
-
 export default function ProjectView({ project, renderPolicy }: ProjectViewProps) {
   const [activeTab, setActiveTab] = useHashTab();
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -50,12 +34,7 @@ export default function ProjectView({ project, renderPolicy }: ProjectViewProps)
   const [policyOpened, setPolicyOpened] = useState(activeTab === POLICY_TAB_ID);
   if (activeTab === POLICY_TAB_ID && !policyOpened) setPolicyOpened(true);
 
-  // Mo tu link chia se: trinh duyet khong tu cuon duoc vi tab render sau khi tai trang.
-  useEffect(() => {
-    if (isProjectTabId(window.location.hash.slice(1))) {
-      tabsRef.current?.scrollIntoView({ block: 'start' });
-    }
-  }, []);
+  useScrollToTabsOnLoad(tabsRef);
 
   const activeLabel = PROJECT_TABS.find((tab) => tab.id === activeTab)?.label;
 

@@ -1,7 +1,7 @@
 import type { FileInfo } from './api';
 
-/** Swagger: response cua GET /portal/projects/detail — chi giu cac truong FE dung. */
-export interface ProjectDetail {
+/** Mot du an trong ket qua GET /portal/projects/search — chi giu cac truong FE dung. */
+export interface Project {
   id: number;
   code: string;
   name: string;

@@ -1,0 +1,375 @@
+/*
+ * Style rieng ban Bootstrap — moi selector deu nam duoi .bs-page de khong anh huong ban MUI.
+ * So do lay tu Figma (web 1440 / mobile 402), mau tu src/constants/designTokens.ts.
+ */
+.bs-page {
+  --brand-gradient: linear-gradient(90deg, #2a52be 0%, #00b4d8 100%);
+  --brand-primary: #2a52be;
+  --brand-primary-100: #eef0fd;
+  min-height: 100vh;
+  background: #fff;
+  color: #38393d;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Header */
+.bs-page .bs-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6.55px);
+  border-bottom: 1px solid #f0f1f1;
+  box-shadow: 0 2px 8px 0 rgba(42, 82, 190, 0.2);
+}
+
+.bs-page .bs-nav-link {
+  color: #7c7d84;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 25px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.bs-page .bs-nav-link:hover {
+  color: var(--brand-primary);
+}
+
+.bs-page .bs-online {
+  font-size: 13px;
+  font-weight: 500;
+  color: #38393d;
+}
+
+.bs-page .bs-avatar {
+  padding: 11px;
+  border-radius: 32px;
+  background: var(--brand-gradient);
+}
+
+/* Noi dung chinh */
+.bs-page .bs-main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.bs-page .bs-breadcrumb {
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.bs-page .bs-breadcrumb a {
+  color: var(--brand-primary);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.bs-page .bs-breadcrumb .bs-sep {
+  color: var(--brand-primary);
+  font-weight: 500;
+}
+
+.bs-page .bs-breadcrumb .bs-current {
+  color: #38393d;
+  font-weight: 600;
+}
+
+.bs-page .bs-title {
+  margin: 0 0 8px;
+  color: var(--brand-primary);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.bs-page .bs-desc {
+  margin: 0;
+  color: #595a60;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.bs-page .bs-btn-gradient {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 24px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--brand-gradient);
+  color: var(--brand-primary-100);
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  /* Figma mobile: nut rong het hang; web: vua noi dung (xem media query) */
+  width: 100%;
+}
+
+.bs-page .bs-btn-gradient:hover,
+.bs-page .bs-btn-gradient:focus-visible {
+  color: var(--brand-primary-100);
+  filter: brightness(0.95);
+}
+
+/* Banner */
+.bs-page .bs-banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1392 / 725;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #166b86;
+}
+
+.bs-page .bs-banner-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.bs-page .bs-banner-track::-webkit-scrollbar {
+  display: none;
+}
+
+.bs-page .bs-banner-track img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  scroll-snap-align: start;
+}
+
+.bs-page .bs-dots {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px;
+}
+
+.bs-page .bs-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 100px;
+  background: #c9cacc;
+  transition: width 0.2s;
+}
+
+.bs-page .bs-dot[aria-current='true'] {
+  width: 32px;
+  background: #008ca8;
+}
+
+/* Thanh tab */
+.bs-page .bs-tabs-bar {
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--brand-gradient);
+}
+
+.bs-page .bs-tabs {
+  flex-wrap: nowrap;
+  gap: 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.bs-page .bs-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.bs-page .bs-tabs .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 32px;
+  color: var(--brand-primary-100);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.bs-page .bs-tabs .nav-link img {
+  width: 20px;
+  height: 20px;
+}
+
+.bs-page .bs-tabs .nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Figma: mobile nen primary 50%, web nen primary dac */
+.bs-page .bs-tabs .nav-link.active {
+  background: rgba(42, 82, 190, 0.5);
+  color: var(--brand-primary-100);
+  font-weight: 600;
+}
+
+.bs-page .bs-tab-placeholder {
+  padding: 48px 0;
+  text-align: center;
+  color: #595a60;
+}
+
+/* Footer */
+.bs-page .bs-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 16px;
+  background: var(--brand-gradient);
+  color: #fff;
+}
+
+.bs-page .bs-footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.bs-page .bs-footer a:hover {
+  text-decoration: underline;
+}
+
+.bs-page .bs-tagline {
+  margin: 0;
+  color: #f0f1f1;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 26px;
+}
+
+.bs-page .bs-contact {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 21px;
+}
+
+.bs-page .bs-footer-heading {
+  margin: 0 0 16px;
+  color: var(--brand-primary-100);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.bs-page .bs-footer-list {
+  margin: 0;
+  padding-left: 22.5px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.bs-page .bs-footer-list li + li {
+  margin-top: 8px;
+}
+
+.bs-page .bs-map {
+  display: block;
+  width: 100%;
+  height: 234px;
+  flex-shrink: 0;
+}
+
+.bs-page .bs-map img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.bs-page .bs-copyright {
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--brand-primary-100);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 26px;
+  text-align: center;
+}
+
+/* Web (Bootstrap md >= 768px) */
+@media (min-width: 768px) {
+  .bs-page .bs-main {
+    padding: 16px 24px 24px;
+    gap: 32px;
+  }
+
+  .bs-page .bs-title {
+    font-size: 32px;
+  }
+
+  .bs-page .bs-desc {
+    font-size: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bs-page .bs-btn-gradient {
+    width: auto;
+    padding: 13px 24px;
+  }
+
+  .bs-page .bs-banner {
+    border-radius: 16px;
+  }
+
+  .bs-page .bs-tabs {
+    gap: 24px;
+    justify-content: space-between;
+  }
+
+  .bs-page .bs-tabs .nav-link {
+    padding: 16px 24px;
+    font-size: 15px;
+  }
+
+  .bs-page .bs-tabs .nav-link img {
+    width: 24px;
+    height: 24px;
+  }
+
+  .bs-page .bs-tabs .nav-link.active {
+    background: var(--brand-primary);
+  }
+
+  .bs-page .bs-footer {
+    padding: 32px;
+  }
+
+  .bs-page .bs-tagline {
+    font-size: 17px;
+  }
+
+  .bs-page .bs-footer-col-1 {
+    width: 373px;
+  }
+
+  .bs-page .bs-footer-col-2 {
+    width: 280px;
+  }
+
+  .bs-page .bs-map {
+    width: 380px;
+  }
+
+  .bs-page .bs-copyright {
+    font-size: 18px;
+    text-align: left;
+  }
+}

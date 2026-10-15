@@ -1,7 +1,6 @@
 /**
- * BE khong co truong slug cho du an -> FE tu tao: `{ten-khong-dau}-{id}`,
- * vd "VINHOMES OCEAN PARK 2 & 3" (id 65) -> `vinhomes-ocean-park-2-3-65`.
- * Id o cuoi de goi API; phan chu chi de link de doc va tot cho SEO.
+ * Slug du an theo quy uoc SCRUM-7: ten tieng Viet -> khong dau, khoang trang -> "-".
+ * Vd "VINHOMES HẢI VÂN BAY" -> `vinhomes-hai-van-bay`. Ky tu dac biet bi bo: "2 & 3" -> `2-3`.
  */
 export function slugify(text: string): string {
   return text
@@ -13,13 +12,19 @@ export function slugify(text: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-export function buildProjectSlug(project: { id: number; name: string }): string {
-  const text = slugify(project.name);
-  return text ? `${text}-${project.id}` : String(project.id);
+export function buildProjectSlug(project: { name: string }): string {
+  return slugify(project.name);
 }
 
-/** Lay id tu slug (so o cuoi). Tra null neu slug khong hop le. */
-export function parseProjectId(slug: string | undefined): number | null {
-  const match = slug?.match(/(?:^|-)(\d+)$/);
-  return match ? Number(match[1]) : null;
+/**
+ * BE khong co API tra du an theo slug, chi co tim theo ten (khong phan biet dau).
+ * Slug mat ky tu dac biet ("2 & 3" -> "2-3", "[AI] Vin..." -> "ai-vin...") nen tim ca cum co the truot:
+ * thu ca cum truoc, roi bot dan tu o cuoi, roi o dau — nguoi goi chon du an co slug KHOP CHINH XAC.
+ */
+export function slugSearchQueries(slug: string, maxQueries = 8): string[] {
+  const words = slug.split('-').filter(Boolean);
+  const queries = [words.join(' ')];
+  for (let end = words.length - 1; end >= 2; end--) queries.push(words.slice(0, end).join(' '));
+  for (let start = 1; words.length - start >= 2; start++) queries.push(words.slice(start).join(' '));
+  return [...new Set(queries)].slice(0, maxQueries);
 }
