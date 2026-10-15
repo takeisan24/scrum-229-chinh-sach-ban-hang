@@ -1,16 +1,17 @@
-/**
- * Commit base chi chua phan dung chung (token, icon/anh Figma, mock, share, sanitize).
- * Giao dien nam o tung branch: feature/SCRUM-229-mui va feature/SCRUM-229-bootstrap.
- */
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import ProjectDetailMui from './pages/mui/ProjectDetailMui';
+import { MOCK_PROJECT } from './data/mockProject';
+
+const PROJECT_PATH = `/du-an/${MOCK_PROJECT.slug}`;
+
 export default function App() {
   return (
-    <main style={{ padding: 32 }}>
-      <h1>SCRUM-229 — Tab Chính sách bán hàng</h1>
-      <p>Đây là phần dùng chung. Checkout một trong hai nhánh để xem giao diện:</p>
-      <ul>
-        <li><code>feature/SCRUM-229-mui</code> — bản MUI (bản chính, sẽ ghép API)</li>
-        <li><code>feature/SCRUM-229-bootstrap</code> — bản Bootstrap (UI tĩnh)</li>
-      </ul>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/du-an/:slug" element={<ProjectDetailMui />} />
+        {/* Cac trang khac (Gioi thieu, Tin tuc...) ngoai pham vi -> ve trang du an mau */}
+        <Route path="*" element={<Navigate to={PROJECT_PATH} replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
