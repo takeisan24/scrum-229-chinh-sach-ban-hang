@@ -10,7 +10,7 @@ import { slugify } from '../../lib/projectSlug';
 import { projectPath } from '../../lib/routes';
 import type { Project } from '../../types/project';
 import PageShell from './components/PageShell';
-import PolicyPanel from './components/PolicyPanel';
+import PolicyPanel, { PolicySkeleton } from './components/PolicyPanel';
 import ProjectView, { type ProjectViewModel } from './components/ProjectView';
 
 /** Trang chi tiet du an ban MUI — du lieu that tu API UAT. */
@@ -54,7 +54,7 @@ function ProjectFromApi({ slug }: { slug: string }) {
   return (
     <ProjectView
       project={project && toViewModel(project)}
-      renderPolicy={() => project && <PolicyPanel projectId={project.id} />}
+      renderPolicy={() => (project ? <PolicyPanel projectId={project.id} /> : <PolicySkeleton />)}
     />
   );
 }

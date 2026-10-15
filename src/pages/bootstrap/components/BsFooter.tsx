@@ -9,6 +9,7 @@ import {
   FOOTER_TAGLINE,
   SOCIAL_LINKS,
 } from '../../../data/site';
+import { versionPath } from '../../../lib/routes';
 
 export default function BsFooter() {
   return (
@@ -37,7 +38,7 @@ export default function BsFooter() {
             <ul className="bs-footer-list">
               {FOOTER_CATEGORIES.map((item) => (
                 <li key={item.href}>
-                  <Link to={item.href}>{item.label}</Link>
+                  <Link to={versionPath('bootstrap', item.href)}>{item.label}</Link>
                 </li>
               ))}
             </ul>

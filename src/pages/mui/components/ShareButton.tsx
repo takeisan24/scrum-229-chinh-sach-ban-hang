@@ -33,7 +33,7 @@ export default function ShareButton() {
           flexShrink: 0,
           px: 3,
           py: { xs: 1, md: '13px' },
-          borderRadius: 2,
+          borderRadius: '8px',
           background: BRAND_GRADIENT,
           color: colors.primary100,
           fontSize: 15,

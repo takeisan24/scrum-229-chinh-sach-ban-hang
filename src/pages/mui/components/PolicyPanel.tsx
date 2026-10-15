@@ -10,17 +10,21 @@ interface PolicyPanelProps {
   projectId: number;
 }
 
+/** Khung cho noi dung chinh sach — hien ca luc dang tra du an de vung nay khong trong (tranh giat layout). */
+export function PolicySkeleton() {
+  return (
+    // minHeight 100vh khop voi .policy-content.is-loading-media: footer o ngoai man hinh tu dau den khi anh tai xong
+    <Box aria-busy="true" aria-label="Đang tải chính sách bán hàng" sx={{ maxWidth: 1200, mx: 'auto', minHeight: '100vh' }}>
+      <Skeleton variant="rounded" sx={{ width: '100%', height: 'auto', aspectRatio: '1200 / 1265' }} />
+    </Box>
+  );
+}
+
 /** Tai va hien chinh sach ban hang. `data: null` (du an chua co chinh sach) -> PolicyContent hien thong bao rong. */
 export default function PolicyPanel({ projectId }: PolicyPanelProps) {
   const [state, retry] = useRequest(projectId, (signal) => getProjectPolicy(projectId, signal));
 
-  if (state.status === 'loading') {
-    return (
-      <Box aria-busy="true" aria-label="Đang tải chính sách bán hàng" sx={{ maxWidth: 1200, mx: 'auto' }}>
-        <Skeleton variant="rounded" sx={{ width: '100%', height: 'auto', aspectRatio: '1200 / 1265' }} />
-      </Box>
-    );
-  }
+  if (state.status === 'loading') return <PolicySkeleton />;
 
   if (state.status === 'error') {
     return (

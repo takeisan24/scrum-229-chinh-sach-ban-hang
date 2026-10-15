@@ -14,6 +14,11 @@
   overflow-wrap: break-word;
 }
 
+/* Dang tai anh: giu toi thieu 1 man hinh de footer khong bi day xuong lien tuc (CLS) */
+.policy-content.is-loading-media {
+  min-height: 100vh;
+}
+
 .policy-content > :first-child {
   margin-top: 0;
 }

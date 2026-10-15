@@ -22,7 +22,8 @@ export default function BannerCarousel({ images, alt }: BannerCarouselProps) {
         width: '100%',
         // Ty le khung banner tren Figma: 1392x725 (web) va 370x192.7 (mobile) — cung ~1.92
         aspectRatio: '1392 / 725',
-        borderRadius: { xs: 2, md: 4 },
+        // Figma: 8px mobile / 16px web (chuoi px — so trong sx bi nhan voi shape.borderRadius 8px)
+        borderRadius: { xs: '8px', md: '16px' },
         overflow: 'hidden',
         bgcolor: BANNER_PLACEHOLDER_BG,
       }}

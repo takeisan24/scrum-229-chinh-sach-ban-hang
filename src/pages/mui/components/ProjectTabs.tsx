@@ -11,7 +11,7 @@ interface ProjectTabsProps {
 
 export default function ProjectTabs({ value, onChange }: ProjectTabsProps) {
   return (
-    <Box sx={{ background: BRAND_GRADIENT, borderRadius: 4, p: 2 }}>
+    <Box sx={{ background: BRAND_GRADIENT, borderRadius: '16px', p: 2 }}>
       <Tabs
         value={value}
         onChange={(_event, next: ProjectTabId) => onChange(next)}

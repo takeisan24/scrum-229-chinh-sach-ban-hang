@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { colors } from '../../../constants/designTokens';
 import { POLICY_TAB_ID, PROJECT_TABS } from '../../../constants/projectTabs';
 import { useHashTab, useScrollToTabsOnLoad } from '../../../hooks/useHashTab';
+import { versionPath } from '../../../lib/routes';
 import BannerCarousel from './BannerCarousel';
 import ProjectTabs from './ProjectTabs';
 import ShareButton from './ShareButton';
@@ -41,7 +42,7 @@ export default function ProjectView({ project, renderPolicy }: ProjectViewProps)
   return (
     <>
       <Box component="nav" aria-label="breadcrumb" sx={{ display: 'flex', gap: 0.5, fontSize: 15, lineHeight: '25px' }}>
-        <Link component={RouterLink} to="/du-an" underline="hover" sx={{ color: colors.primary, fontWeight: 500 }}>
+        <Link component={RouterLink} to={versionPath('mui', '/du-an')} underline="hover" sx={{ color: colors.primary, fontWeight: 500 }}>
           Dự án
         </Link>
         <Box component="span" sx={{ color: colors.primary, fontWeight: 500 }}>/</Box>
@@ -87,7 +88,7 @@ export default function ProjectView({ project, renderPolicy }: ProjectViewProps)
       {project ? (
         project.bannerImages.length > 0 && <BannerCarousel images={project.bannerImages} alt={project.name} />
       ) : (
-        <Skeleton variant="rounded" sx={{ width: '100%', height: 'auto', aspectRatio: '1392 / 725', borderRadius: { xs: 2, md: 4 } }} />
+        <Skeleton variant="rounded" sx={{ width: '100%', height: 'auto', aspectRatio: '1392 / 725', borderRadius: { xs: '8px', md: '16px' } }} />
       )}
 
       <Box ref={tabsRef} sx={{ scrollMarginTop: HEADER_HEIGHT + 16 }}>

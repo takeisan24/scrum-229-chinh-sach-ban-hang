@@ -11,6 +11,7 @@ import logo from '../../../assets/figma/logo.svg';
 import onlineDot from '../../../assets/figma/online-dot.svg';
 import { BRAND_GRADIENT, HEADER_SHADOW, colors } from '../../../constants/designTokens';
 import { MAIN_NAV, ONLINE_COUNT } from '../../../data/site';
+import { versionPath } from '../../../lib/routes';
 
 /** Chieu cao header — dung lam scroll-margin de tab khong bi header sticky che. */
 export const HEADER_HEIGHT = 70;
@@ -46,14 +47,14 @@ export default function SiteHeader() {
     >
       {/* flex: 1 hai ben de menu giua luon nam chinh giua header */}
       <Box sx={{ flex: 1, display: 'flex' }}>
-        <RouterLink to="/" aria-label="Trang chủ" style={{ display: 'flex' }}>
+        <RouterLink to={versionPath('mui', '/')} aria-label="Trang chủ" style={{ display: 'flex' }}>
           <img src={logo} alt="" width={46} height={46} />
         </RouterLink>
       </Box>
 
       <Box component="nav" sx={{ display: { xs: 'none', md: 'flex' }, gap: 4 }}>
         {MAIN_NAV.map((item) => (
-          <Link key={item.href} component={RouterLink} to={item.href} underline="none" sx={navLinkSx}>
+          <Link key={item.href} component={RouterLink} to={versionPath('mui', item.href)} underline="none" sx={navLinkSx}>
             {item.label}
           </Link>
         ))}
@@ -95,7 +96,7 @@ export default function SiteHeader() {
             <Link
               key={item.href}
               component={RouterLink}
-              to={item.href}
+              to={versionPath('mui', item.href)}
               underline="none"
               onClick={() => setMenuOpen(false)}
               sx={navLinkSx}

@@ -13,6 +13,7 @@ import {
   FOOTER_TAGLINE,
   SOCIAL_LINKS,
 } from '../../../data/site';
+import { versionPath } from '../../../lib/routes';
 
 const headingSx = { fontSize: 18, fontWeight: 600, color: colors.primary100, mb: 2 } as const;
 
@@ -70,7 +71,7 @@ export default function SiteFooter() {
                 <li key={item.href}>
                   <Link
                     component={RouterLink}
-                    to={item.href}
+                    to={versionPath('mui', item.href)}
                     underline="hover"
                     sx={{ color: colors.white, fontSize: 15, fontWeight: 500 }}
                   >
@@ -105,7 +106,7 @@ export default function SiteFooter() {
             component="img"
             src={footerMap}
             alt=""
-            sx={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 2, display: 'block' }}
+            sx={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
           />
         </Link>
       </Box>

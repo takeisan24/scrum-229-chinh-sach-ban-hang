@@ -5,6 +5,7 @@ import iconUser from '../../../assets/figma/icon-user-01.svg';
 import logo from '../../../assets/figma/logo.svg';
 import onlineDot from '../../../assets/figma/online-dot.svg';
 import { MAIN_NAV, ONLINE_COUNT } from '../../../data/site';
+import { versionPath } from '../../../lib/routes';
 
 /** Header: menu giua tren web, offcanvas Bootstrap tren mobile (dieu khien bang React, khong can bootstrap.js). */
 export default function BsHeader() {
@@ -15,14 +16,14 @@ export default function BsHeader() {
       <header className="bs-header d-flex align-items-center px-3 px-md-4">
         {/* flex-fill hai ben de menu giua luon nam chinh giua header */}
         <div className="flex-fill d-flex">
-          <Link to="/" aria-label="Trang chủ" className="d-flex">
+          <Link to={versionPath('bootstrap', '/')} aria-label="Trang chủ" className="d-flex">
             <img src={logo} alt="" width={46} height={46} />
           </Link>
         </div>
 
         <nav className="d-none d-md-flex gap-4">
           {MAIN_NAV.map((item) => (
-            <Link key={item.href} to={item.href} className="bs-nav-link">
+            <Link key={item.href} to={versionPath('bootstrap', item.href)} className="bs-nav-link">
               {item.label}
             </Link>
           ))}
@@ -60,7 +61,7 @@ export default function BsHeader() {
         </div>
         <nav className="offcanvas-body d-flex flex-column gap-3">
           {MAIN_NAV.map((item) => (
-            <Link key={item.href} to={item.href} className="bs-nav-link" onClick={() => setMenuOpen(false)}>
+            <Link key={item.href} to={versionPath('bootstrap', item.href)} className="bs-nav-link" onClick={() => setMenuOpen(false)}>
               {item.label}
             </Link>
           ))}

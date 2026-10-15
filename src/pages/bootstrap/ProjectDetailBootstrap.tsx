@@ -5,6 +5,7 @@ import { POLICY_TAB_ID, PROJECT_TABS } from '../../constants/projectTabs';
 import { MOCK_POLICY_HTML, MOCK_PROJECT } from '../../data/mockProject';
 import { useBootstrapStylesheet } from '../../hooks/useBootstrapStylesheet';
 import { useHashTab, useScrollToTabsOnLoad } from '../../hooks/useHashTab';
+import { versionPath } from '../../lib/routes';
 import BsBanner from './components/BsBanner';
 import BsFooter from './components/BsFooter';
 import BsHeader from './components/BsHeader';
@@ -36,7 +37,7 @@ function BootstrapPage() {
 
       <main className="bs-main">
         <nav aria-label="breadcrumb" className="bs-breadcrumb d-flex gap-1">
-          <Link to="/du-an">Dự án</Link>
+          <Link to={versionPath('bootstrap', '/du-an')}>Dự án</Link>
           <span className="bs-sep">/</span>
           <span className="bs-current" aria-current="page">{project.name}</span>
         </nav>
