@@ -1,21 +1,75 @@
 # SCRUM-229 — Tab "Chính sách bán hàng"
 
-Trang chi tiết dự án bất động sản: tab **Chính sách bán hàng** + nút **Chia sẻ**, dựng đủ trang theo Figma (header, banner, thanh tab, nội dung, footer).
+Trang chi tiết dự án bất động sản: tab **Chính sách bán hàng** + nút **Chia sẻ**, dựng đủ trang theo Figma (header, banner, thanh tab, nội dung, footer). Hai phiên bản giao diện **MUI** (bản chính, ghép API) và **Bootstrap** (UI tĩnh) chạy chung một app.
 
-## Phạm vi
+## Phạm vi (theo Jira)
 
-1. **Nút Chia sẻ** — copy link trang dự án hiện tại kèm anchor tab: `{origin}/{phiên-bản}/du-an/{slug}#chinh-sach-ban-hang`
-2. **Hiển thị nội dung chính sách** — render rich content từ CMS, phải support:
-   - Text + format: bold, italic, màu, size
-   - Ảnh, table
-   - Căn lề, list, link
-3. **Ghép API** `/portal/contents/get` (chỉ làm trên bản MUI)
+1. **Nút Chia sẻ** — copy link dự án theo slug kèm tab: `{origin}/{phiên-bản}/du-an/{slug}#chinh-sach-ban-hang`
+2. **Hiển thị nội dung chính sách** — text, format chữ (bold, italic, màu, size), ảnh, table, căn lề, list, link
+3. **Ghép API** `GET /portal/contents/get` (`refType=PROJECT`, `contentType=POLICY`) — trên bản MUI
+
+## Chạy
+
+Yêu cầu **Node `^20.19` hoặc `>=22.12`** (Vite 7). Node 18 sẽ báo lỗi khi chạy.
+
+```bash
+npm install
+npm run dev        # http://localhost:5173
+```
+
+Không cần file `.env`: mặc định gọi API UAT qua proxy của Vite (UAT chặn CORS từ `localhost`).
+Build kiểm tra: `npm run build`, `npm run lint`.
+
+## Hướng dẫn review / test
+
+### Hai phiên bản
+
+| Route | Phiên bản | Dữ liệu |
+|---|---|---|
+| `/mui/du-an/:slug` | **MUI** — bản chính | API thật UAT |
+| `/bootstrap/du-an/:slug` | **Bootstrap** | Tĩnh theo Figma — **luôn hiện dự án mẫu "Vinhomes Ocean Park 3"**, không phụ thuộc slug trên URL |
+
+- Nút **MUI | Bootstrap** ở góc phải dưới để chuyển qua lại, giữ nguyên slug và tab.
+- Mở `/` sẽ vào `/mui/du-an/vinhomes-ocean-park-2-3#chinh-sach-ban-hang`.
+- Code tách theo route: vào bản nào chỉ tải JS/CSS của bản đó. CSS Bootstrap chỉ nạp khi vào route Bootstrap và gỡ ra khi rời trang, nên không đè lên MUI.
+
+### Cấu trúc thư mục
 
 ```
-GET /portal/contents/get?refId=<projectId>&refType=PROJECT&contentType=POLICY
-Header: Accept-Language: vi | en
-→ { code: "SUCCESS", data: { content: "<HTML>", fileInfoList, ... } | null }
+src/
+├── pages/mui/              Chỉ bản MUI (dùng @mui/material)
+│   ├── ProjectDetailMui.tsx    Tra dự án theo slug → hiển thị
+│   └── components/             Header, footer, banner, tab, nút Chia sẻ, PolicyPanel (gọi API)
+├── pages/bootstrap/        Chỉ bản Bootstrap (class Bootstrap + bootstrap-page.css)
+├── components/
+│   ├── PolicyContent.tsx       Hiển thị HTML chính sách — DÙNG CHUNG cho 2 bản
+│   └── VersionSwitcher.tsx     Nút chuyển phiên bản
+├── styles/policy-content.css   CSS cho nội dung chính sách (dùng chung)
+├── api/  types/            Gọi API theo Swagger
+├── hooks/                  useRequest (loading/lỗi/thử lại), useHashTab, useSnapCarousel, useBootstrapStylesheet
+├── lib/                    projectSlug, sanitizeHtml, share (copy link), routes
+├── constants/              Token màu từ Figma, định nghĩa 7 tab
+├── data/                   Nội dung header/footer, dữ liệu tĩnh cho bản Bootstrap, HTML mẫu đủ định dạng
+└── assets/figma/           Icon, logo, ảnh export từ Figma
 ```
+
+**Vì sao `PolicyContent` dùng CSS thuần, không dùng MUI/Bootstrap?** Nội dung chính sách là HTML admin nhập từ trình soạn thảo CMS (đã kèm màu, cỡ chữ, căn lề). FE chỉ sanitize rồi hiển thị nguyên định dạng đó, nên hai bản phải hiển thị **giống hệt nhau** — dùng chung một component tránh hai bản lệch nhau. MUI/Bootstrap chỉ quyết định phần khung trang.
+
+### Kịch bản test (bản MUI, dữ liệu UAT)
+
+| # | Mở link | Kết quả mong đợi |
+|---|---|---|
+| 1 | `/mui/du-an/vinhomes-ocean-park-2-3#chinh-sach-ban-hang` | Vào thẳng tab Chính sách, nội dung là ảnh (giống Figma) |
+| 2 | `/mui/du-an/vinhomes-hai-van-bay#chinh-sach-ban-hang` | Tiêu đề căn giữa, cỡ 28px (định dạng admin nhập) + ảnh |
+| 3 | `/mui/du-an/vinhomes-global-gate-ha-long#chinh-sach-ban-hang` | "Chính sách bán hàng của dự án đang được cập nhật." (BE trả `data: null`) |
+| 4 | `/mui/du-an/ai-vin-can-gio-khu-b#chinh-sach-ban-hang` | Tìm đúng dự án "[AI] Vin Cần giờ khu B" dù tên có ký tự đặc biệt |
+| 5 | `/mui/du-an/VINHOMES-HAI-VAN-BAY` | Tự chuyển về slug chuẩn chữ thường |
+| 6 | `/mui/du-an/khong-ton-tai` | "Không tìm thấy dự án" |
+| 7 | Bấm **Chia sẻ** → dán link vào tab mới | Hiện "Đã sao chép…"; link mở thẳng tab Chính sách bán hàng |
+| 8 | Ngắt mạng rồi mở trang | Thông báo lỗi kèm nút **Thử lại** |
+| 9 | Thu nhỏ cửa sổ về ~400px | Giao diện mobile theo Figma: nút Chia sẻ full-width, thanh tab cuộn ngang, menu ☰ |
+
+Dữ liệu UAT có thể thay đổi theo thời gian. Các định dạng UAT chưa có (bold, italic, màu, list, link, table) được kiểm tra bằng HTML mẫu `src/data/mockPolicyFormats.ts` — viết theo đúng kiểu HTML trình soạn thảo sinh ra; xem bằng cách tạm render `<PolicyContent html={FORMAT_DEMO_POLICY_HTML} />`.
 
 ## API (đã đối chiếu Swagger + gọi thử UAT)
 
@@ -23,50 +77,31 @@ Swagger: https://api-uat.vinhomes.biz.vn/hovixi/api/v1/swagger-ui/index.html
 
 | Điểm | Thực tế BE | FE xử lý |
 |---|---|---|
-| `data.content` | Chuỗi HTML từ trình soạn thảo CMS | Sanitize rồi render, giữ nguyên định dạng của admin |
+| `data.content` | Chuỗi HTML từ trình soạn thảo CMS | Sanitize (DOMPurify) rồi render, giữ nguyên định dạng của admin |
 | `data: null` | Dự án chưa có chính sách (7/10 dự án trên UAT) | Hiện "đang được cập nhật" |
 | `fileInfoList` | Trùng với ảnh đã có trong HTML | Bỏ qua |
-| Slug dự án | BE **không có** trường slug / API tra theo slug | Slug theo SCRUM-7: `vinhomes-ocean-park-2-3`. Tra dự án bằng `GET /portal/projects/search?name=` (không phân biệt dấu), chọn dự án có slug khớp chính xác. Tên có ký tự đặc biệt (`&`, `[AI]`) thử thêm vài cụm từ ngắn hơn |
+| Slug dự án | BE **không có** trường slug / API tra theo slug | Slug theo SCRUM-7 (tên không dấu, khoảng trắng → `-`). Tra dự án bằng `GET /portal/projects/search?name=` (không phân biệt dấu), chọn dự án có slug khớp chính xác. Tên có ký tự đặc biệt (`&`, `[AI]`) thử thêm vài cụm từ ngắn hơn |
 | Tên, mô tả, banner | Có sẵn trong kết quả `projects/search` | Dùng `name`, `shortDescription`, `fileInfo.fullLink` |
-| Không tìm thấy | Không có dự án nào có slug khớp | Hiện "Không tìm thấy dự án" |
 | CORS | UAT chặn `localhost` (403) | Dev đi qua proxy Vite (`vite.config.ts`). Deploy: BE cần mở CORS cho domain FE |
 
 ### Nguồn nội dung chính sách
 
 Figma admin (page "Component", node `348:7830` — "Thêm mới phân khu" > tab Chính sách): admin nhập chính sách bằng **trình soạn thảo văn bản** với thanh công cụ: cỡ chữ, màu, B/I/U/S, căn trái/giữa/phải, list số/chấm, chèn ảnh, chèn link — khớp danh sách định dạng trong Jira. Phía người dùng Figma chỉ minh hoạ 1 ảnh poster vì admin chèn ảnh qua trình soạn thảo. → FE render HTML đầy đủ định dạng, không chỉ ảnh.
 
-Lưu ý gửi BE: ảnh chính sách trên CDN nặng ~8,4 MB/ảnh; dự án 7 nhúng ảnh base64 vào HTML (~800 KB JSON).
+## Hạn chế đã biết
 
-## Hai phiên bản giao diện
+Phát hiện khi audit, chưa xử lý trong ticket này:
 
-Theo mẫu bàn giao của team (vd SCRUM-224): một app, hai phiên bản chạy song song, có nút chuyển phiên bản nổi ở góc phải dưới.
-
-| Route | Phiên bản | Dữ liệu |
-|---|---|---|
-| `/mui/du-an/:slug` | **MUI** — bản chính | API thật UAT |
-| `/bootstrap/du-an/:slug` | **Bootstrap** | Tĩnh theo Figma (`src/data/mockProject.ts`) |
-
-Mở `/` sẽ vào `/mui/du-an/vinhomes-ocean-park-2-3#chinh-sach-ban-hang`.
-CSS Bootstrap chỉ được nạp khi vào route Bootstrap và gỡ ra khi rời trang (`src/hooks/useBootstrapStylesheet.ts`), nên không đè lên MUI.
-Nội dung chính sách hai bản dùng chung một component (`src/components/PolicyContent.tsx` + `src/styles/policy-content.css`).
-
-### Phần dùng chung
-
-| Đường dẫn | Nội dung |
+| Vấn đề | Ghi chú |
 |---|---|
-| `src/constants/designTokens.ts` | Màu, gradient, shadow lấy từ biến Figma |
-| `src/constants/projectTabs.ts` | 7 tab + icon, hash tương ứng |
-| `src/assets/figma/` | Icon SVG, logo, ảnh banner/chính sách/bản đồ export từ Figma |
-| `src/data/site.ts` | Nội dung header/footer |
-| `src/data/mockProject.ts` | Dữ liệu tĩnh theo Figma (ảnh poster) — cho bản UI tĩnh |
-| `src/data/mockPolicyFormats.ts` | HTML mẫu đủ định dạng theo thanh công cụ admin — dữ liệu test, không hiển thị cho người dùng |
-| `src/lib/share.ts` | Tạo link chia sẻ + copy clipboard (có fallback cho HTTP) |
-| `src/lib/sanitizeHtml.ts` | Sanitize HTML CMS bằng DOMPurify |
-| `src/api/`, `src/types/` | Gọi API theo đúng Swagger, gom lỗi BE về `ApiError` |
-| `src/hooks/useRequest.ts` | Gọi API kèm trạng thái loading/lỗi/thử lại, huỷ request cũ |
-| `src/lib/projectSlug.ts` | Slug dự án theo SCRUM-7 (tên không dấu, khoảng trắng → `-`) |
-| `src/lib/routes.ts`, `src/components/VersionSwitcher.tsx` | Route hai phiên bản + nút chuyển phiên bản |
-| `src/hooks/useHashTab.ts`, `src/hooks/useSnapCarousel.ts` | Logic tab theo hash và carousel dùng chung |
+| Bản MUI giật layout khi tải (CLS cao) | Vùng chính sách trống trong lúc tra dự án; ảnh CMS không có kích thước sẵn (`width/height="100%"`) |
+| Bo góc một số khối ở bản MUI lớn hơn Figma | Nút Chia sẻ, thanh tab, banner, bản đồ footer |
+| Ở bản Bootstrap, bấm logo/menu/breadcrumb/link footer chuyển sang bản MUI | Các trang ngoài phạm vi đều quay về dự án mặc định của bản MUI |
+| Font Google tải chặn render (~0,5s FCP) | |
+| Thiếu `meta description`, tiêu đề tab trình duyệt cố định | |
+| Chữ tab trên nền gradient đầu xanh ngọc có độ tương phản 2,17:1 (chuẩn AA 4,5:1) | Màu theo đúng Figma — cần designer xem lại |
+| Ảnh chính sách trên CDN ~8,4 MB/ảnh (trang ~16,6 MB) | Cần BE nén ảnh khi upload |
+| Mở slug không tồn tại mất ~2s (tối đa 8 lần gọi search) | Cần BE thêm API tra dự án theo slug |
 
 ## Design
 
@@ -83,21 +118,12 @@ Figma (bản copy đọc được qua MCP): file `f59d8Qzt9aRcgWr4Le7ERr` — we
 
 ⚠️ Estimate trên tính cho phạm vi chỉ có tab + nội dung. Phạm vi đã mở rộng sang dựng đủ trang (header, banner carousel, footer) và tra dự án theo slug → cần báo PM điều chỉnh.
 
-## Chạy
-
-```bash
-npm install
-cp .env.example .env   # tuy chon — mac dinh da tro qua proxy UAT
-npm run dev
-```
-
 ## Stack
 
-Vite · React 19 · TypeScript · MUI · Bootstrap · React Router · Axios · DOMPurify
+Vite 7 · React 19 · TypeScript · MUI · Bootstrap · React Router · Axios · DOMPurify
 
 ## Điểm cần xác nhận với BE/PM
 
-- [x] `VITE_API_BASE_URL` — UAT `https://api-uat.vinhomes.biz.vn/hovixi/api/v1` (dev dùng proxy `/hovixi/api/v1`)
 - [x] `/portal/contents/get` dùng **GET**, tham số trên query string
 - [x] Shape response — đã sửa `src/types/` theo Swagger
 - [x] Slug dự án: theo quy ước SCRUM-7
