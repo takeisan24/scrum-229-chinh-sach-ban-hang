@@ -1,22 +1,14 @@
-import bannerOceanCity from '../assets/figma/banner-ocean-city.jpg';
 import policyImage from '../assets/figma/policy-vinhomes-ocean-park-3.jpg';
 
 /**
- * Trang demo dinh dang — DU LIEU GIA, khong lay tu API.
- * Muc dich: chung minh FE hien thi du cac kieu ma task yeu cau (bold, italic, mau, size,
- * anh, table, can le, list, link) trong khi du lieu that tren UAT moi chi co anh.
+ * HTML mau du cac dinh dang ma trinh soan thao admin tao ra — DU LIEU TEST, khong hien cho nguoi dung.
+ * Thanh cong cu admin (Figma "Them moi phan khu" > tab Chinh sach, node 348:7830): co chu, mau,
+ * B/I/U/S, can trai/giua/phai, list so/cham, anh, link. Them table vi Jira yeu cau va admin co the dan tu Word/Excel.
+ * Viet theo dung kieu HTML trinh soan thao that sinh ra (doi chieu du an 7 tren UAT): style inline,
+ * ky tu Viet ma hoa (&Aacute;...), anh width/height 100%.
  *
- * HTML viet theo dung kieu trinh soan thao CMS that sinh ra (doi chieu du an 7 tren UAT):
- * style inline, <span style="font-size">, ky tu Viet ma hoa (&Aacute;...), anh width/height 100%.
+ * Dung de kiem tra local: tam render <PolicyContent html={FORMAT_DEMO_POLICY_HTML} /> hoac dung cho test sau nay.
  */
-export const FORMAT_DEMO_SLUG = 'demo-dinh-dang';
-
-export const FORMAT_DEMO_PROJECT = {
-  name: 'Trang demo định dạng chính sách',
-  description: 'Dữ liệu giả để kiểm tra hiển thị đủ các kiểu định dạng của nội dung chính sách bán hàng.',
-  bannerImages: [bannerOceanCity],
-};
-
 export const FORMAT_DEMO_POLICY_HTML = `<h2 style="text-align: center;"><span style="color: #c0392b; font-size: 26px;"><strong>CH&Iacute;NH S&Aacute;CH B&Aacute;N H&Agrave;NG MẪU</strong></span></h2>
 <p style="text-align: center;"><em>(&Aacute;p dụng từ 01/10/2026 đến 31/12/2026 &ndash; dữ liệu giả)</em></p>
 <h3>1. Định dạng chữ</h3>

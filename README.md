@@ -31,6 +31,10 @@ Swagger: https://api-uat.vinhomes.biz.vn/hovixi/api/v1/swagger-ui/index.html
 | Không tìm thấy | HTTP 404 + `code: RESOURCE_NOT_FOUND` | Gom về `ApiError`, hiện "Không tìm thấy dự án" |
 | CORS | UAT chặn `localhost` (403) | Dev đi qua proxy Vite (`vite.config.ts`). Deploy: BE cần mở CORS cho domain FE |
 
+### Nguồn nội dung chính sách
+
+Figma admin (page "Component", node `348:7830` — "Thêm mới phân khu" > tab Chính sách): admin nhập chính sách bằng **trình soạn thảo văn bản** với thanh công cụ: cỡ chữ, màu, B/I/U/S, căn trái/giữa/phải, list số/chấm, chèn ảnh, chèn link — khớp danh sách định dạng trong Jira. Phía người dùng Figma chỉ minh hoạ 1 ảnh poster vì admin chèn ảnh qua trình soạn thảo. → FE render HTML đầy đủ định dạng, không chỉ ảnh.
+
 Lưu ý gửi BE: ảnh chính sách trên CDN nặng ~8,4 MB/ảnh; dự án 7 nhúng ảnh base64 vào HTML (~800 KB JSON).
 
 ## Cấu trúc branch
@@ -60,7 +64,8 @@ Sửa phần dùng chung → commit trên một branch rồi `git cherry-pick` s
 | `src/constants/projectTabs.ts` | 7 tab + icon, hash tương ứng |
 | `src/assets/figma/` | Icon SVG, logo, ảnh banner/chính sách/bản đồ export từ Figma |
 | `src/data/site.ts` | Nội dung header/footer |
-| `src/data/mockProject.ts` | Dữ liệu giả dự án + HTML chính sách (đủ mọi kiểu format để test) |
+| `src/data/mockProject.ts` | Dữ liệu tĩnh theo Figma (ảnh poster) — cho bản UI tĩnh |
+| `src/data/mockPolicyFormats.ts` | HTML mẫu đủ định dạng theo thanh công cụ admin — dữ liệu test, không hiển thị cho người dùng |
 | `src/lib/share.ts` | Tạo link chia sẻ + copy clipboard (có fallback cho HTTP) |
 | `src/lib/sanitizeHtml.ts` | Sanitize HTML CMS bằng DOMPurify |
 | `src/api/`, `src/types/` | Gọi API theo đúng Swagger, gom lỗi BE về `ApiError` |
