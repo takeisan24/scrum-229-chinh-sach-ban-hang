@@ -1,4 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { FORMAT_DEMO_SLUG } from './data/mockPolicyFormats';
+import FormatDemoMui from './pages/mui/FormatDemoMui';
 import ProjectDetailMui from './pages/mui/ProjectDetailMui';
 
 /** Du an mac dinh khi demo: VINHOMES OCEAN PARK 2 & 3 tren UAT (dung du an trong Figma). Trang tu doi sang slug chuan. */
@@ -8,6 +10,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Route tinh duoc uu tien hon /du-an/:slug */}
+        <Route path={`/du-an/${FORMAT_DEMO_SLUG}`} element={<FormatDemoMui />} />
         <Route path="/du-an/:slug" element={<ProjectDetailMui />} />
         {/* Cac trang khac (Gioi thieu, Tin tuc...) ngoai pham vi -> ve du an mac dinh */}
         <Route path="*" element={<Navigate to={DEFAULT_PROJECT_PATH} replace />} />

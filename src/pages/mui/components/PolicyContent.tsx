@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import type { SxProps, Theme } from '@mui/material/styles';
-import { sanitizeHtml } from '../../../lib/sanitizeHtml';
+import { TABLE_WRAPPER_CLASS, sanitizeHtml } from '../../../lib/sanitizeHtml';
 
 /**
  * Style cho HTML tu CMS. Khong dat mau/size/can le o day de khong de len
@@ -15,7 +15,9 @@ const richContentSx: SxProps<Theme> = {
   color: 'text.primary',
   fontSize: 16,
   lineHeight: 1.7,
-  wordBreak: 'break-word',
+  // overflow-wrap (khong dung word-break): van ngat link/chu qua dai, nhung khong lam table bi ep
+  // hep toi muc bẻ tung ky tu — table rong se cuon ngang trong khung boc.
+  overflowWrap: 'break-word',
   '& > :first-of-type': { mt: 0 },
   '& p': { my: 1.5 },
   '& h1, & h2, & h3, & h4': { mt: 3, mb: 1.5, lineHeight: 1.3 },
@@ -23,14 +25,9 @@ const richContentSx: SxProps<Theme> = {
   '& ul, & ol': { pl: 3, my: 1.5 },
   '& li + li': { mt: 0.5 },
   '& a': { color: 'primary.main', textDecoration: 'underline' },
-  // display:block de table rong hon man hinh thi cuon ngang thay vi day vo trang
-  '& table': {
-    display: 'block',
-    maxWidth: '100%',
-    overflowX: 'auto',
-    borderCollapse: 'collapse',
-    my: 2,
-  },
+  // sanitizeHtml boc moi table trong khung nay: table rong hon man hinh cuon ngang thay vi day vo trang
+  [`& .${TABLE_WRAPPER_CLASS}`]: { maxWidth: '100%', overflowX: 'auto', my: 2 },
+  '& table': { borderCollapse: 'collapse' },
   '& th, & td': {
     border: '1px solid',
     borderColor: 'divider',
