@@ -1,19 +1,11 @@
-import { apiClient } from './client';
+import { getData } from './client';
 import type { ContentResponse, GetContentParams } from '../types/content';
 
 /**
  * Lay noi dung chinh sach ban hang cua mot du an.
- *
- * TODO(SCRUM-229): chua ro endpoint dung GET hay POST — hoi BE.
- * Dang tam dung POST vi payload co 3 truong.
+ * Tra `null` khi du an chua co chinh sach (BE tra `data: null` — 7/10 du an tren UAT).
  */
-export async function getProjectPolicy(projectId: string | number) {
-  const params: GetContentParams = {
-    refId: projectId,
-    refType: 'PROJECT',
-    contentType: 'POLICY',
-  };
-
-  const { data } = await apiClient.post<ContentResponse>('/portal/contents/get', params);
-  return data;
+export function getProjectPolicy(projectId: number, signal?: AbortSignal) {
+  const params: GetContentParams = { refId: projectId, refType: 'PROJECT', contentType: 'POLICY' };
+  return getData<ContentResponse>('/portal/contents/get', params, signal);
 }

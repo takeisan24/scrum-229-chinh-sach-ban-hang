@@ -11,9 +11,27 @@ Trang chi tiết dự án bất động sản: tab **Chính sách bán hàng** +
    - Căn lề, list, link
 3. **Ghép API** `/portal/contents/get` (chỉ làm trên bản MUI)
 
-```json
-{ "refId": "<projectId>", "refType": "PROJECT", "contentType": "POLICY" }
 ```
+GET /portal/contents/get?refId=<projectId>&refType=PROJECT&contentType=POLICY
+Header: Accept-Language: vi | en
+→ { code: "SUCCESS", data: { content: "<HTML>", fileInfoList, ... } | null }
+```
+
+## API (đã đối chiếu Swagger + gọi thử UAT)
+
+Swagger: https://api-uat.vinhomes.biz.vn/hovixi/api/v1/swagger-ui/index.html
+
+| Điểm | Thực tế BE | FE xử lý |
+|---|---|---|
+| `data.content` | Chuỗi HTML từ trình soạn thảo CMS | Sanitize rồi render, giữ nguyên định dạng của admin |
+| `data: null` | Dự án chưa có chính sách (7/10 dự án trên UAT) | Hiện "đang được cập nhật" |
+| `fileInfoList` | Trùng với ảnh đã có trong HTML | Bỏ qua |
+| Slug dự án | BE **không có** trường slug | FE tự tạo `{ten-khong-dau}-{id}`, vd `/du-an/vinhomes-ocean-park-2-3-65` |
+| Tên, mô tả, banner | `GET /portal/projects/detail?id=` | Dùng `name`, `shortDescription`, `fileInfo.fullLink` |
+| Không tìm thấy | HTTP 404 + `code: RESOURCE_NOT_FOUND` | Gom về `ApiError`, hiện "Không tìm thấy dự án" |
+| CORS | UAT chặn `localhost` (403) | Dev đi qua proxy Vite (`vite.config.ts`). Deploy: BE cần mở CORS cho domain FE |
+
+Lưu ý gửi BE: ảnh chính sách trên CDN nặng ~8,4 MB/ảnh; dự án 7 nhúng ảnh base64 vào HTML (~800 KB JSON).
 
 ## Cấu trúc branch
 
@@ -45,7 +63,9 @@ Sửa phần dùng chung → commit trên một branch rồi `git cherry-pick` s
 | `src/data/mockProject.ts` | Dữ liệu giả dự án + HTML chính sách (đủ mọi kiểu format để test) |
 | `src/lib/share.ts` | Tạo link chia sẻ + copy clipboard (có fallback cho HTTP) |
 | `src/lib/sanitizeHtml.ts` | Sanitize HTML CMS bằng DOMPurify |
-| `src/api/`, `src/types/` | Stub API `/portal/contents/get` (chưa dùng — làm FE trước) |
+| `src/api/`, `src/types/` | Gọi API theo đúng Swagger, gom lỗi BE về `ApiError` |
+| `src/hooks/useRequest.ts` | Gọi API kèm trạng thái loading/lỗi/thử lại, huỷ request cũ |
+| `src/lib/projectSlug.ts` | Tạo slug dự án `{ten-khong-dau}-{id}` và tách id từ slug |
 
 ## Design
 
@@ -67,6 +87,7 @@ Figma (bản copy đọc được qua MCP): file `f59d8Qzt9aRcgWr4Le7ERr` — we
 ```bash
 git checkout feature/SCRUM-229-mui   # hoac feature/SCRUM-229-bootstrap
 npm install
+cp .env.example .env   # tuy chon — mac dinh da tro qua proxy UAT
 npm run dev
 ```
 
@@ -74,13 +95,14 @@ npm run dev
 
 Vite · React 19 · TypeScript · React Router · Axios · DOMPurify — cộng MUI hoặc Bootstrap tùy branch.
 
-## Điểm cần xác nhận với BE/PM (BE để sau)
+## Điểm cần xác nhận với BE/PM
 
-- [ ] `VITE_API_BASE_URL` — URL thật
-- [ ] `/portal/contents/get` dùng **GET hay POST**
-- [ ] Shape response thật (`src/types/content.ts` đang là phỏng đoán)
-- [ ] Tab chuyển bằng hash `#` hay route riêng
-- [ ] Design cho trạng thái loading / rỗng / lỗi
+- [x] `VITE_API_BASE_URL` — UAT `https://api-uat.vinhomes.biz.vn/hovixi/api/v1` (dev dùng proxy `/hovixi/api/v1`)
+- [x] `/portal/contents/get` dùng **GET**, tham số trên query string
+- [x] Shape response — đã sửa `src/types/` theo Swagger
+- [ ] Slug dự án: FE đang tự tạo — cần xác nhận khớp với URL trang thật
+- [ ] CORS cho domain deploy
+- [ ] Design cho trạng thái loading / rỗng / lỗi (FE đang tự làm)
 
 ## Bảo mật
 
