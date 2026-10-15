@@ -17,7 +17,7 @@ import ProjectTabs from './ProjectTabs';
 import ShareButton from './ShareButton';
 import { HEADER_HEIGHT } from './SiteHeader';
 
-/** Du lieu trang can — trang that map tu API, trang demo lay tu mock. */
+/** Du lieu trang can — map tu API (xem ProjectDetailMui). */
 export interface ProjectViewModel {
   name: string;
   description: string | null;
@@ -29,25 +29,21 @@ interface ProjectViewProps {
   project: ProjectViewModel | null;
   /** Noi dung tab chinh sach — chi duoc goi khi mo tab lan dau */
   renderPolicy: () => ReactNode;
-  /** Tab mo khi URL khong co hash */
-  defaultTab?: ProjectTabId;
-  /** Thong bao hien dau trang (vd danh dau trang demo) */
-  notice?: ReactNode;
 }
 
 /** Tab dang chon luu tren hash URL de link chia se `#chinh-sach-ban-hang` mo dung tab. */
-function useHashTab(defaultTab: ProjectTabId): [ProjectTabId, (id: ProjectTabId) => void] {
+function useHashTab(): [ProjectTabId, (id: ProjectTabId) => void] {
   const { hash } = useLocation();
   const navigate = useNavigate();
   const fromHash = hash.slice(1);
-  const activeTab = isProjectTabId(fromHash) ? fromHash : defaultTab;
+  const activeTab = isProjectTabId(fromHash) ? fromHash : DEFAULT_TAB_ID;
 
   const setActiveTab = (id: ProjectTabId) => navigate({ hash: id }, { replace: true });
   return [activeTab, setActiveTab];
 }
 
-export default function ProjectView({ project, renderPolicy, defaultTab = DEFAULT_TAB_ID, notice }: ProjectViewProps) {
-  const [activeTab, setActiveTab] = useHashTab(defaultTab);
+export default function ProjectView({ project, renderPolicy }: ProjectViewProps) {
+  const [activeTab, setActiveTab] = useHashTab();
   const tabsRef = useRef<HTMLDivElement>(null);
 
   // Chi tai chinh sach khi mo tab lan dau (noi dung co the nang ~800 KB), sau do giu lai khi doi tab.
@@ -65,8 +61,6 @@ export default function ProjectView({ project, renderPolicy, defaultTab = DEFAUL
 
   return (
     <>
-      {notice}
-
       <Box component="nav" aria-label="breadcrumb" sx={{ display: 'flex', gap: 0.5, fontSize: 15, lineHeight: '25px' }}>
         <Link component={RouterLink} to="/du-an" underline="hover" sx={{ color: colors.primary, fontWeight: 500 }}>
           Dự án
