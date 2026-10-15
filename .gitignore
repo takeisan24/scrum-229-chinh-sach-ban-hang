@@ -28,3 +28,7 @@ dist-ssr
 .env.local
 .env.*.local
 !.env.example
+
+# Cong cu local (OMC state, anh chup Playwright)
+.omc/
+.playwright-mcp/

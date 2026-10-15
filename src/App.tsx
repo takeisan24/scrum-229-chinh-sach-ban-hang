@@ -1,27 +1,16 @@
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import ProjectDetailMui from './pages/mui/ProjectDetailMui';
-import ProjectDetailBootstrap from './pages/bootstrap/ProjectDetailBootstrap';
-
-function Home() {
-  return (
-    <main style={{ fontFamily: 'system-ui', padding: 32 }}>
-      <h1>SCRUM-229 — Tab Chinh sach ban hang</h1>
-      <ul>
-        <li><Link to="/mui">Ban MUI (ban chinh, co ghep API)</Link></li>
-        <li><Link to="/bootstrap">Ban Bootstrap (UI tinh)</Link></li>
-      </ul>
-    </main>
-  );
-}
-
+/**
+ * Commit base chi chua phan dung chung (token, icon/anh Figma, mock, share, sanitize).
+ * Giao dien nam o tung branch: feature/SCRUM-229-mui va feature/SCRUM-229-bootstrap.
+ */
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/mui" element={<ProjectDetailMui />} />
-        <Route path="/bootstrap" element={<ProjectDetailBootstrap />} />
-      </Routes>
-    </BrowserRouter>
+    <main style={{ padding: 32 }}>
+      <h1>SCRUM-229 — Tab Chính sách bán hàng</h1>
+      <p>Đây là phần dùng chung. Checkout một trong hai nhánh để xem giao diện:</p>
+      <ul>
+        <li><code>feature/SCRUM-229-mui</code> — bản MUI (bản chính, sẽ ghép API)</li>
+        <li><code>feature/SCRUM-229-bootstrap</code> — bản Bootstrap (UI tĩnh)</li>
+      </ul>
+    </main>
   );
 }
