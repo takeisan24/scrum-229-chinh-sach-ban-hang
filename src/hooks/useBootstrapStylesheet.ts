@@ -14,6 +14,8 @@ export function useBootstrapStylesheet(): boolean {
     link.rel = 'stylesheet';
     link.href = bootstrapCssUrl;
     link.onload = () => setReady(true);
+    // Tai loi: van render (thieu style Bootstrap) thay vi de trang trang mai
+    link.onerror = () => setReady(true);
     document.head.appendChild(link);
     return () => link.remove();
   }, []);

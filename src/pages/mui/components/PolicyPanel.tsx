@@ -8,6 +8,7 @@ import PolicyContent from '../../../components/PolicyContent';
 
 interface PolicyPanelProps {
   projectId: number;
+  projectName: string;
 }
 
 /** Khung cho noi dung chinh sach — hien ca luc dang tra du an de vung nay khong trong (tranh giat layout). */
@@ -21,7 +22,7 @@ export function PolicySkeleton() {
 }
 
 /** Tai va hien chinh sach ban hang. `data: null` (du an chua co chinh sach) -> PolicyContent hien thong bao rong. */
-export default function PolicyPanel({ projectId }: PolicyPanelProps) {
+export default function PolicyPanel({ projectId, projectName }: PolicyPanelProps) {
   const [state, retry] = useRequest(projectId, (signal) => getProjectPolicy(projectId, signal));
 
   if (state.status === 'loading') return <PolicySkeleton />;
@@ -38,5 +39,5 @@ export default function PolicyPanel({ projectId }: PolicyPanelProps) {
     );
   }
 
-  return <PolicyContent html={state.data?.content ?? ''} />;
+  return <PolicyContent html={state.data?.content ?? ''} imageAlt={`Chính sách bán hàng – ${projectName}`} />;
 }

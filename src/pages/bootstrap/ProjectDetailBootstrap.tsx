@@ -58,7 +58,7 @@ function BootstrapPage() {
 
         <div role="tabpanel" id={`tabpanel-${activeTab}`} aria-labelledby={`tab-${activeTab}`}>
           {activeTab === POLICY_TAB_ID ? (
-            <PolicyContent html={MOCK_POLICY_HTML} />
+            <PolicyContent html={MOCK_POLICY_HTML} imageAlt={`Chính sách bán hàng – ${project.name}`} />
           ) : (
             // Cac tab khac nam ngoai pham vi SCRUM-229
             <p className="bs-tab-placeholder">Nội dung tab “{activeLabel}” nằm ngoài phạm vi SCRUM-229.</p>

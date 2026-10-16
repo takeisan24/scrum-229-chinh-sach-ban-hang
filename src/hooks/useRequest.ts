@@ -17,7 +17,9 @@ export function useRequest<T>(key: unknown, request: (signal: AbortSignal) => Pr
     const controller = new AbortController();
     setState({ status: 'loading' });
     request(controller.signal)
-      .then((data) => setState({ status: 'success', data }))
+      .then((data) => {
+        if (!controller.signal.aborted) setState({ status: 'success', data });
+      })
       .catch((error) => {
         if (!controller.signal.aborted) setState({ status: 'error', error });
       });

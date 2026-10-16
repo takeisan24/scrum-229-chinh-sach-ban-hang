@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { findProjectBySlug } from '../../api/projects';
 import { colors } from '../../constants/designTokens';
+import { projectDescription } from '../../data/site';
 import { useRequest } from '../../hooks/useRequest';
 import { slugify } from '../../lib/projectSlug';
 import { projectPath } from '../../lib/routes';
@@ -32,7 +33,7 @@ export default function ProjectDetailMui() {
 function toViewModel(project: Project): ProjectViewModel {
   return {
     name: project.name,
-    description: project.shortDescription,
+    description: projectDescription(project.name),
     bannerImages: project.fileInfo?.fullLink ? [project.fileInfo.fullLink] : [],
   };
 }
@@ -54,7 +55,7 @@ function ProjectFromApi({ slug }: { slug: string }) {
   return (
     <ProjectView
       project={project && toViewModel(project)}
-      renderPolicy={() => (project ? <PolicyPanel projectId={project.id} /> : <PolicySkeleton />)}
+      renderPolicy={() => (project ? <PolicyPanel projectId={project.id} projectName={project.name} /> : <PolicySkeleton />)}
     />
   );
 }

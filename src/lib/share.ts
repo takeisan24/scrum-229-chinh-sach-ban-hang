@@ -20,6 +20,8 @@ export async function copyToClipboard(text: string): Promise<boolean> {
     }
   }
 
+  // Fallback lay focus vao textarea -> nho phan tu dang focus (nut Chia se) de tra lai sau khi copy
+  const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   const textarea = document.createElement('textarea');
   textarea.value = text;
   textarea.setAttribute('readonly', '');
@@ -27,11 +29,13 @@ export async function copyToClipboard(text: string): Promise<boolean> {
   textarea.style.opacity = '0';
   document.body.appendChild(textarea);
   textarea.select();
+  textarea.setSelectionRange(0, text.length); // iOS Safari can chon vung ro rang
   try {
     return document.execCommand('copy');
   } catch {
     return false;
   } finally {
     document.body.removeChild(textarea);
+    previousFocus?.focus();
   }
 }

@@ -46,4 +46,12 @@ export const SOCIAL_LINKS = [
   { icon: social5, label: 'X', href: 'https://x.com' },
 ] as const;
 
+/**
+ * Mo ta ngan duoi ten du an — SCRUM-10 quy dinh cau co dinh + ten du an
+ * (khong lay shortDescription cua API). Dau cham cuoi theo Figma.
+ */
+export function projectDescription(projectName: string): string {
+  return `Theo dõi thông tin chi tiết và bảng giá, mặt bằng, tiến độ và chính sách bán hàng dự án ${projectName}.`;
+}
+
 export const COPYRIGHT = '© 2026 - Realestate. All rights reserved.';

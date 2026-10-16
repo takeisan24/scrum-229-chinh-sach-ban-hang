@@ -7,7 +7,7 @@ import { UI_VERSIONS, type UiVersion } from '../lib/routes';
  * Style inline vi dung chung cho ca hai ban, khong phu thuoc thu vien UI.
  */
 export default function VersionSwitcher() {
-  const { pathname, hash } = useLocation();
+  const { pathname, search, hash } = useLocation();
   const [, current, ...rest] = pathname.split('/');
   if (!UI_VERSIONS.some((v) => v.id === current)) return null;
 
@@ -18,7 +18,8 @@ export default function VersionSwitcher() {
         position: 'fixed',
         right: 16,
         bottom: 16,
-        zIndex: 2000,
+        // Duoi Drawer MUI (1200), offcanvas/backdrop Bootstrap (1040+), toast -> khong bam duoc khi menu dang mo
+        zIndex: 1035,
         display: 'flex',
         gap: 4,
         padding: 4,
@@ -33,7 +34,7 @@ export default function VersionSwitcher() {
         return (
           <Link
             key={id}
-            to={{ pathname: ['', id, ...rest].join('/'), hash }}
+            to={{ pathname: ['', id, ...rest].join('/'), search, hash }}
             aria-current={active ? 'page' : undefined}
             style={{
               padding: '6px 14px',

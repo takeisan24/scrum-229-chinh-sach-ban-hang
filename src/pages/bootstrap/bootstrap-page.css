@@ -175,6 +175,11 @@
   background: #008ca8;
 }
 
+/* Anh trong noi dung chinh sach: bo goc 8px theo Figma (chi ban Bootstrap — ban MUI hien dung nhu CMS tra ve) */
+.bs-page .policy-content img {
+  border-radius: 8px;
+}
+
 /* Thanh tab */
 .bs-page .bs-tabs-bar {
   padding: 16px;

@@ -10,10 +10,13 @@ type CopyStatus = 'idle' | 'success' | 'error';
 
 export default function ShareButton() {
   const [status, setStatus] = useState<CopyStatus>('idle');
+  // Moi lan bam la mot thong bao moi -> dem lai 3s tu dau
+  const [copyCount, setCopyCount] = useState(0);
 
   const handleClick = async () => {
     const ok = await copyToClipboard(buildPolicyShareUrl());
     setStatus(ok ? 'success' : 'error');
+    setCopyCount((n) => n + 1);
   };
 
   const handleClose = (_event?: unknown, reason?: string) => {
@@ -46,7 +49,10 @@ export default function ShareButton() {
       </Button>
 
       <Snackbar
+        key={copyCount}
         open={status !== 'idle'}
+        // Nam tren nut chuyen phien ban o goc duoi (khong bi che nut dong)
+        sx={{ bottom: { xs: 72, sm: 72 } }}
         autoHideDuration={3000}
         onClose={handleClose}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}

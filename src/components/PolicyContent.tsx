@@ -4,14 +4,16 @@ import '../styles/policy-content.css';
 
 interface PolicyContentProps {
   html: string;
+  /** Alt gan cho anh CMS de trong, vd "Chính sách bán hàng – VINHOMES HẢI VÂN BAY" */
+  imageAlt?: string;
 }
 
 /**
  * Hien thi HTML chinh sach (da sanitize). Dung chung cho ban MUI va Bootstrap —
  * noi dung la HTML cua admin nen hai ban hien thi giong het nhau.
  */
-export default function PolicyContent({ html }: PolicyContentProps) {
-  const safeHtml = useMemo(() => sanitizeHtml(html), [html]);
+export default function PolicyContent({ html, imageAlt }: PolicyContentProps) {
+  const safeHtml = useMemo(() => sanitizeHtml(html, { imageAlt }), [html, imageAlt]);
   const ref = useRef<HTMLDivElement>(null);
   const [mediaLoading, setMediaLoading] = useState(true);
 

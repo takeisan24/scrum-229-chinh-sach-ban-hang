@@ -116,6 +116,7 @@ Theo quy ước SCRUM-7: **tên dự án tiếng Việt → không dấu, khoả
 - Nội dung là **HTML từ trình soạn thảo CMS** (Figma admin: "Thêm mới phân khu" > tab Chính sách — thanh công cụ cỡ chữ, màu, B/I/U/S, căn lề, list, ảnh, link). FE giữ nguyên định dạng admin nhập: text, **bold**, *italic*, màu, cỡ chữ, ảnh, bảng, căn lề, list, link.
 - HTML được **sanitize bằng DOMPurify** trước khi render; link mở tab mới (`noopener noreferrer`); ảnh tải lazy; bảng rộng cuộn ngang trong khung riêng trên mobile.
 - `fileInfoList` của API bị bỏ qua vì trùng với ảnh đã có trong HTML.
+- Bản MUI hiển thị bài viết đúng như CMS trả về; Figma chỉ là chuẩn cho bản Bootstrap (dữ liệu tĩnh).
 - Hai phiên bản dùng chung `PolicyContent` + `policy-content.css` để hiển thị **giống hệt nhau** (MUI/Bootstrap chỉ quyết định phần khung trang).
 
 ### 4. Trạng thái hiển thị
@@ -140,14 +141,23 @@ Theo quy ước SCRUM-7: **tên dự án tiếng Việt → không dấu, khoả
 
 ## 🌐 Danh Sách API Tích Hợp
 
-Base URL (UAT): `https://api-uat.vinhomes.biz.vn/hovixi/api/v1` — khi chạy local đi qua proxy Vite (`/hovixi`) vì UAT chặn CORS từ `localhost`.
+Base URL (UAT): `https://api-uat.vinhomes.biz.vn/hovixi/api/v1` — khi chạy local đi qua proxy Vite (`/hovixi`) vì UAT chặn CORS từ `localhost`. Header chung: `Accept-Language: vi`.
+
+**Tab Chính sách bán hàng (phạm vi SCRUM-229) chỉ dùng 1 API:**
 
 | Chức năng | Endpoint | Method | Tham số / Mô tả |
 | :--- | :--- | :---: | :--- |
-| **Nội dung chính sách** | `/portal/contents/get` | `GET` | `refId` (id dự án), `refType=PROJECT`, `contentType=POLICY` → `data.content` (HTML) hoặc `data: null` |
-| **Tra dự án theo slug** | `/portal/projects/search` | `GET` | `name`, `pageSize=50` → dùng `id`, `name`, `shortDescription`, `fileInfo.fullLink` (banner) |
+| **Nội dung chính sách** | `/portal/contents/get` | `GET` | `refId` (id dự án), `refType=PROJECT`, `contentType=POLICY` → `data.content` là bài viết RichText (HTML gồm chữ + ảnh), hoặc `data: null` khi dự án chưa có chính sách |
 
-Header chung: `Accept-Language: vi`.
+Response thực tế khớp schema Swagger; các trường có thể `null`: `data`, `data.embedLocation`, `debug` (object khi lỗi), `pageNumber`/`pageSize`/`totalElements`/`totalPages`. Tham số sai → HTTP 400 `VALIDATION_FAILED`.
+
+**Giả lập trang chi tiết dự án (ngoài phạm vi ticket):** trên site thật, `projectId` và tên dự án do trang chi tiết dự án cung cấp (SCRUM-10 dùng `/portal/projects/detail`). Repo này chạy độc lập và URL chỉ có slug (SCRUM-7), nên bản MUI dùng thêm:
+
+| Chức năng | Endpoint | Method | Tham số / Mô tả |
+| :--- | :--- | :---: | :--- |
+| Đổi slug → `projectId` + tên + banner | `/portal/projects/search` | `GET` | `name`, `pageSize=50` → chọn dự án có slug khớp chính xác |
+
+Mô tả dưới tên dự án theo SCRUM-10: *"Theo dõi thông tin chi tiết và bảng giá, mặt bằng, tiến độ và chính sách bán hàng dự án" + tên dự án*.
 
 ---
 

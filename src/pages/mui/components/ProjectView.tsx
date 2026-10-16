@@ -16,7 +16,7 @@ import { HEADER_HEIGHT } from './SiteHeader';
 /** Du lieu trang can — map tu API (xem ProjectDetailMui). */
 export interface ProjectViewModel {
   name: string;
-  description: string | null;
+  description: string;
   bannerImages: string[];
 }
 
@@ -86,7 +86,7 @@ export default function ProjectView({ project, renderPolicy }: ProjectViewProps)
       </Box>
 
       {project ? (
-        project.bannerImages.length > 0 && <BannerCarousel images={project.bannerImages} alt={project.name} />
+        <BannerCarousel images={project.bannerImages} alt={project.name} />
       ) : (
         <Skeleton variant="rounded" sx={{ width: '100%', height: 'auto', aspectRatio: '1392 / 725', borderRadius: { xs: '8px', md: '16px' } }} />
       )}

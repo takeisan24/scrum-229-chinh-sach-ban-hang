@@ -39,7 +39,6 @@
   max-width: 100%;
   /* CMS gan height="100%" — ep auto de anh khong bi meo */
   height: auto !important;
-  border-radius: 8px;
 }
 
 .policy-content ul,

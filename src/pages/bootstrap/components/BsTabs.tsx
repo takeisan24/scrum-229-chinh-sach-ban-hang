@@ -26,7 +26,7 @@ export default function BsTabs({ value, onChange }: BsTabsProps) {
               type="button"
               role="tab"
               id={`tab-${tab.id}`}
-              aria-controls={`tabpanel-${tab.id}`}
+              aria-controls={tab.id === value ? `tabpanel-${tab.id}` : undefined}
               aria-selected={tab.id === value}
               className={`nav-link${tab.id === value ? ' active' : ''}`}
               onClick={() => onChange(tab.id)}

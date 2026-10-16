@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
+import logoFooter from '../../../assets/figma/logo-footer.svg';
 import { BANNER_PLACEHOLDER_BG, colors } from '../../../constants/designTokens';
 import { useSnapCarousel } from '../../../hooks/useSnapCarousel';
 
@@ -11,6 +12,8 @@ interface BannerCarouselProps {
 /**
  * Carousel bang CSS scroll-snap: vuot duoc tren mobile ma khong can thu vien.
  * Cham chi bao vi tri + bam de chuyen anh. Khong tu chay (Figma khong yeu cau).
+ * Du an chua co anh (4/10 du an tren UAT): van giu khung cung ty le + logo, de layout khong giat
+ * va link chia se van cuon dung toi thanh tab.
  */
 export default function BannerCarousel({ images, alt }: BannerCarouselProps) {
   const { trackRef, active, onScroll: handleScroll, goTo } = useSnapCarousel();
@@ -28,6 +31,14 @@ export default function BannerCarousel({ images, alt }: BannerCarouselProps) {
         bgcolor: BANNER_PLACEHOLDER_BG,
       }}
     >
+      {images.length === 0 && (
+        <Box
+          component="img"
+          src={logoFooter}
+          alt=""
+          sx={{ position: 'absolute', inset: 0, m: 'auto', width: { xs: 48, md: 96 }, height: 'auto', opacity: 0.5 }}
+        />
+      )}
       <Box
         ref={trackRef}
         onScroll={handleScroll}

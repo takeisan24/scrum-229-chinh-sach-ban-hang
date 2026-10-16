@@ -4,12 +4,13 @@ import { DEFAULT_TAB_ID, isProjectTabId, type ProjectTabId } from '../constants/
 
 /** Tab dang chon luu tren hash URL de link chia se `#chinh-sach-ban-hang` mo dung tab. */
 export function useHashTab(): [ProjectTabId, (id: ProjectTabId) => void] {
-  const { hash } = useLocation();
+  const { hash, search } = useLocation();
   const navigate = useNavigate();
   const fromHash = hash.slice(1);
   const activeTab = isProjectTabId(fromHash) ? fromHash : DEFAULT_TAB_ID;
 
-  const setActiveTab = (id: ProjectTabId) => navigate({ hash: id }, { replace: true });
+  // Giu query string (vd ?utm_source=...) khi doi tab
+  const setActiveTab = (id: ProjectTabId) => navigate({ search, hash: id }, { replace: true });
   return [activeTab, setActiveTab];
 }
 

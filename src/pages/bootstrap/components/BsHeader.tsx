@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import iconMenu from '../../../assets/figma/icon-menu-alt-01.svg';
 import iconUser from '../../../assets/figma/icon-user-01.svg';
@@ -7,9 +7,50 @@ import onlineDot from '../../../assets/figma/online-dot.svg';
 import { MAIN_NAV, ONLINE_COUNT } from '../../../data/site';
 import { versionPath } from '../../../lib/routes';
 
+const MENU_ID = 'bs-mobile-menu';
+
 /** Header: menu giua tren web, offcanvas Bootstrap tren mobile (dieu khien bang React, khong can bootstrap.js). */
 export default function BsHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Hanh vi dialog nhu Drawer ben MUI: Esc de dong, focus vao menu va giu trong menu,
+  // khoa cuon trang phia sau, dong thi tra focus ve nut mo menu.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const panel = panelRef.current;
+    const menuButton = menuButtonRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeRef.current?.focus();
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        return;
+      }
+      if (event.key !== 'Tab' || !panel) return;
+      const focusable = [...panel.querySelectorAll<HTMLElement>('a[href], button')];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      menuButton?.focus();
+    };
+  }, [menuOpen]);
 
   return (
     <>
@@ -38,10 +79,12 @@ export default function BsHeader() {
             <img src={iconUser} alt="" width={24} height={24} />
           </div>
           <button
+            ref={menuButtonRef}
             type="button"
             className="btn p-0 border-0 d-md-none"
             aria-label="Mở menu"
             aria-expanded={menuOpen}
+            aria-controls={MENU_ID}
             onClick={() => setMenuOpen(true)}
           >
             <img src={iconMenu} alt="" width={24} height={24} />
@@ -51,13 +94,23 @@ export default function BsHeader() {
 
       {/* Offcanvas phai nam NGOAI header: header co backdrop-filter nen la khung chua cua phan tu fixed */}
       <div
+        ref={panelRef}
+        id={MENU_ID}
         className={`offcanvas offcanvas-end${menuOpen ? ' show' : ''}`}
-        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
         aria-label="Menu"
+        tabIndex={-1}
         style={{ visibility: menuOpen ? 'visible' : 'hidden', width: 260 }}
       >
         <div className="offcanvas-header">
-          <button type="button" className="btn-close ms-auto" aria-label="Đóng" onClick={() => setMenuOpen(false)} />
+          <button
+            ref={closeRef}
+            type="button"
+            className="btn-close ms-auto"
+            aria-label="Đóng"
+            onClick={() => setMenuOpen(false)}
+          />
         </div>
         <nav className="offcanvas-body d-flex flex-column gap-3">
           {MAIN_NAV.map((item) => (

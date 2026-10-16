@@ -34,7 +34,7 @@ export default function ProjectTabs({ value, onChange }: ProjectTabsProps) {
             icon={<Box component="img" src={tab.icon} alt="" sx={{ width: { xs: 20, md: 24 }, height: { xs: 20, md: 24 } }} />}
             iconPosition="start"
             id={`tab-${tab.id}`}
-            aria-controls={`tabpanel-${tab.id}`}
+            aria-controls={tab.id === value ? `tabpanel-${tab.id}` : undefined}
             sx={{
               minWidth: 0,
               maxWidth: 'none',

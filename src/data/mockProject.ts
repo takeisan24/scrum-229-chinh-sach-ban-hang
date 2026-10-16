@@ -1,5 +1,6 @@
 import bannerOceanCity from '../assets/figma/banner-ocean-city.jpg';
 import policyImage from '../assets/figma/policy-vinhomes-ocean-park-3.jpg';
+import { projectDescription } from './site';
 
 /**
  * Du lieu tinh theo dung Figma — cho ban UI tinh (Bootstrap).
@@ -12,10 +13,12 @@ export interface ProjectSummary {
   bannerImages: string[];
 }
 
+const MOCK_NAME = 'Vinhomes Ocean Park 3';
+
 export const MOCK_PROJECT: ProjectSummary = {
-  name: 'Vinhomes Ocean Park 3',
-  description:
-    'Theo dõi thông tin chi tiết và bảng giá, mặt bằng, tiến độ và chính sách bán hàng dự án VINHOMES OCEAN PARK 3.',
+  name: MOCK_NAME,
+  // Figma viet hoa ten du an trong cau mo ta
+  description: projectDescription(MOCK_NAME.toUpperCase()),
   bannerImages: Array.from({ length: 5 }, () => bannerOceanCity),
 };
 
