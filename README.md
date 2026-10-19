@@ -51,44 +51,76 @@ Mở `/` sẽ vào `/mui/du-an/vinhomes-ocean-park-2-3#chinh-sach-ban-hang`.
 
 ## 📁 Cấu Trúc Thư Mục (Folder Structure)
 
+Ký hiệu: **[CS]** tab Chính sách bán hàng · **[SH]** nút Chia sẻ (hai nhóm thuộc phạm vi SCRUM-229) · **[DA]** giả lập trang chi tiết dự án (tra slug, banner, thanh tab) · **[HF]** header / footer. Không ghi ký hiệu: bản Bootstrap và phần chung của app.
+
+Kiến trúc, chiều phụ thuộc giữa các lớp và quy tắc code: xem [AGENTS.md](AGENTS.md).
+
 ```text
-src/
-├── api/                          # Gọi API Backend
-│   ├── client.ts                 # Axios instance, getData() + ApiError
-│   ├── contents.ts               # Lấy nội dung chính sách bán hàng
-│   └── projects.ts               # Tìm dự án, tra dự án theo slug
-├── components/                   # Dùng chung cho 2 phiên bản
-│   ├── PolicyContent.tsx         # Hiển thị HTML chính sách (sanitize + CSS chung)
-│   └── VersionSwitcher.tsx       # Nút chuyển phiên bản MUI / Bootstrap
-├── constants/
-│   ├── designTokens.ts           # Màu, gradient, shadow lấy từ biến Figma
-│   └── projectTabs.ts            # 7 tab + icon + hash tương ứng
-├── data/
-│   ├── site.ts                   # Nội dung header / footer
-│   ├── mockProject.ts            # Dữ liệu tĩnh theo Figma (bản Bootstrap)
-│   └── mockPolicyFormats.ts      # HTML mẫu đủ định dạng để kiểm tra hiển thị
-├── hooks/
-│   ├── useRequest.ts             # Gọi API: loading / lỗi / thử lại, huỷ request cũ
-│   ├── useHashTab.ts             # Tab theo URL hash, cuộn tới thanh tab khi mở link chia sẻ
-│   ├── useSnapCarousel.ts        # Logic carousel banner (scroll-snap)
-│   └── useBootstrapStylesheet.ts # Nạp / gỡ CSS Bootstrap theo route
-├── lib/
-│   ├── projectSlug.ts            # Tạo slug theo quy ước, sinh cụm từ tìm kiếm
-│   ├── sanitizeHtml.ts           # DOMPurify + bọc bảng để cuộn ngang
-│   ├── share.ts                  # Tạo link chia sẻ, copy clipboard (có fallback)
-│   └── routes.ts                 # Đường dẫn 2 phiên bản
-├── pages/
-│   ├── mui/                      # Chỉ phiên bản MUI
-│   │   ├── ProjectDetailMui.tsx  # Tra dự án theo slug → hiển thị
-│   │   └── components/           # Header, footer, banner, tab, nút Chia sẻ, PolicyPanel
-│   └── bootstrap/                # Chỉ phiên bản Bootstrap
-│       ├── ProjectDetailBootstrap.tsx
-│       ├── bootstrap-page.css    # Style riêng, mọi selector nằm dưới .bs-page
-│       └── components/           # BsHeader, BsFooter, BsBanner, BsTabs, BsShareButton
-├── styles/
-│   └── policy-content.css        # CSS nội dung chính sách (dùng chung)
-├── types/                        # Interface theo Swagger (BaseResponse, ContentResponse, Project)
-└── assets/figma/                 # Icon, logo, ảnh export từ Figma
+scrum-229-chinh-sach-ban-hang/
+├── public/
+│   └── favicon.svg                    # Icon tab trình duyệt (theo logo Figma)
+├── src/
+│   ├── api/                           # Gọi API Backend
+│   │   ├── client.ts                  # [CS] Axios instance, getData() + ApiError
+│   │   ├── contents.ts                # [CS] GET /portal/contents/get (chính sách)
+│   │   └── projects.ts                # [DA] Tìm dự án theo tên, so khớp slug
+│   ├── assets/figma/                  # Icon, logo, ảnh export từ Figma
+│   ├── components/                    # Dùng chung cho 2 phiên bản
+│   │   ├── PolicyContent.tsx          # [CS] Hiển thị HTML chính sách (sanitize + CSS chung)
+│   │   └── VersionSwitcher.tsx        # Nút chuyển phiên bản MUI / Bootstrap
+│   ├── constants/
+│   │   ├── designTokens.ts            # Màu, gradient, shadow lấy từ biến Figma
+│   │   └── projectTabs.ts             # [SH] 7 tab + icon + hash (#chinh-sach-ban-hang)
+│   ├── data/
+│   │   ├── site.ts                    # [HF] Nội dung header / footer, câu mô tả theo SCRUM-10
+│   │   ├── mockProject.ts             # Dữ liệu tĩnh theo Figma (bản Bootstrap)
+│   │   └── mockPolicyFormats.ts       # HTML mẫu đủ định dạng để test (không dùng trong app)
+│   ├── hooks/
+│   │   ├── useRequest.ts              # [CS] Gọi API: loading / lỗi / thử lại, huỷ request cũ
+│   │   ├── useHashTab.ts              # [SH] Tab theo URL hash, cuộn tới thanh tab khi mở link chia sẻ
+│   │   ├── useSnapCarousel.ts         # [DA] Logic carousel banner (scroll-snap)
+│   │   └── useBootstrapStylesheet.ts  # Nạp / gỡ CSS Bootstrap theo route
+│   ├── lib/
+│   │   ├── sanitizeHtml.ts            # [CS] DOMPurify + bọc table để cuộn ngang
+│   │   ├── share.ts                   # [SH] Tạo link chia sẻ, copy clipboard (có fallback)
+│   │   ├── projectSlug.ts             # [DA] Tạo slug theo SCRUM-7, sinh cụm từ tìm kiếm
+│   │   └── routes.ts                  # Đường dẫn 2 phiên bản
+│   ├── pages/
+│   │   ├── mui/                       # Chỉ phiên bản MUI (API thật)
+│   │   │   ├── ProjectDetailMui.tsx   # [DA] Tra dự án theo slug → hiển thị
+│   │   │   ├── theme.ts               # Theme MUI dựng từ token Figma
+│   │   │   └── components/
+│   │   │       ├── PolicyPanel.tsx    # [CS] Tab chính sách: gọi API, skeleton / lỗi / thử lại
+│   │   │       ├── ShareButton.tsx    # [SH] Nút Chia sẻ + Snackbar
+│   │   │       ├── ProjectView.tsx    # [DA] Tên, mô tả, banner, tab; tải chính sách khi mở tab lần đầu
+│   │   │       ├── ProjectTabs.tsx    # [DA] Thanh 7 tab
+│   │   │       ├── BannerCarousel.tsx # [DA] Banner ảnh dự án
+│   │   │       ├── PageShell.tsx      # [HF] Khung trang + ThemeProvider
+│   │   │       ├── SiteHeader.tsx     # [HF]
+│   │   │       └── SiteFooter.tsx     # [HF]
+│   │   └── bootstrap/                 # Chỉ phiên bản Bootstrap (UI tĩnh theo Figma)
+│   │       ├── ProjectDetailBootstrap.tsx
+│   │       ├── bootstrap-page.css     # Style riêng, mọi selector nằm dưới .bs-page
+│   │       └── components/
+│   │           ├── BsShareButton.tsx  # [SH] Nút Chia sẻ + toast
+│   │           ├── BsTabs.tsx
+│   │           ├── BsBanner.tsx
+│   │           ├── BsHeader.tsx       # [HF]
+│   │           └── BsFooter.tsx       # [HF]
+│   ├── styles/
+│   │   └── policy-content.css         # [CS] CSS nội dung chính sách (dùng chung)
+│   ├── types/                         # Interface theo Swagger
+│   │   ├── api.ts                     # [CS] BaseResponse, FileInfo
+│   │   ├── content.ts                 # [CS] GetContentParams, ContentResponse
+│   │   └── project.ts                 # [DA] Project
+│   ├── App.tsx                        # Route 2 phiên bản, tách code theo route (React.lazy)
+│   ├── main.tsx                       # Điểm khởi chạy
+│   └── index.css                      # CSS nền chung
+├── AGENTS.md                          # Kiến trúc & quy tắc code (cho người và AI agent)
+├── CLAUDE.md                          # Trỏ sang AGENTS.md
+├── vite.config.ts                     # Cấu hình Vite + proxy API khi chạy local
+├── .env.example                       # Mẫu biến môi trường (không bắt buộc)
+└── package.json, tsconfig*.json, eslint.config.js, index.html
 ```
 
 ---
