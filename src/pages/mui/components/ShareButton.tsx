@@ -10,7 +10,7 @@ type CopyStatus = 'idle' | 'success' | 'error';
 
 export default function ShareButton() {
   const [status, setStatus] = useState<CopyStatus>('idle');
-  // Moi lan bam la mot thong bao moi -> dem lai 3s tu dau
+  // Mỗi lần bấm là một thông báo mới -> đếm lại 3s từ đầu
   const [copyCount, setCopyCount] = useState(0);
 
   const handleClick = async () => {
@@ -51,7 +51,7 @@ export default function ShareButton() {
       <Snackbar
         key={copyCount}
         open={status !== 'idle'}
-        // Nam tren nut chuyen phien ban o goc duoi (khong bi che nut dong)
+        // Nằm trên nút chuyển phiên bản ở góc dưới (không bị che nút đóng)
         sx={{ bottom: { xs: 72, sm: 72 } }}
         autoHideDuration={3000}
         onClose={handleClose}

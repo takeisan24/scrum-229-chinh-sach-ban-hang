@@ -2,8 +2,8 @@ import { getData } from './client';
 import type { ContentResponse, GetContentParams } from '../types/content';
 
 /**
- * Lay noi dung chinh sach ban hang cua mot du an.
- * Tra `null` khi du an chua co chinh sach (BE tra `data: null` — 7/10 du an tren UAT).
+ * Lấy nội dung chính sách bán hàng của một dự án.
+ * Trả `null` khi dự án chưa có chính sách (BE trả `data: null` — 7/10 dự án trên UAT).
  */
 export function getProjectPolicy(projectId: number, signal?: AbortSignal) {
   const params: GetContentParams = { refId: projectId, refType: 'PROJECT', contentType: 'POLICY' };

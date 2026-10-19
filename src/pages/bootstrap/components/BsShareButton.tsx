@@ -4,10 +4,10 @@ import { buildPolicyShareUrl, copyToClipboard } from '../../../lib/share';
 
 type CopyStatus = 'idle' | 'success' | 'error';
 
-/** Nut Chia se + toast Bootstrap (tu an sau 3s). */
+/** Nút Chia sẻ + toast Bootstrap (tự ẩn sau 3s). */
 export default function BsShareButton() {
   const [status, setStatus] = useState<CopyStatus>('idle');
-  // Moi lan bam la mot thong bao moi -> dem lai 3s tu dau
+  // Mỗi lần bấm là một thông báo mới -> đếm lại 3s từ đầu
   const [copyCount, setCopyCount] = useState(0);
 
   useEffect(() => {
@@ -29,8 +29,8 @@ export default function BsShareButton() {
         Chia sẻ
       </button>
 
-      {/* Live region luon co mat; toast chen vao khi hien -> trinh doc man hinh doc duoc moi lan.
-          bottom 56 + p-3: toast nam tren nut chuyen phien ban o goc duoi. */}
+      {/* Live region luôn có mặt; toast chèn vào khi hiện -> trình đọc màn hình đọc được mỗi lần.
+          bottom 56 + p-3: toast nằm trên nút chuyển phiên bản ở góc dưới. */}
       <div
         className="toast-container position-fixed start-50 translate-middle-x p-3"
         style={{ bottom: 56 }}

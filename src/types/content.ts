@@ -1,10 +1,10 @@
 import type { FileInfo } from './api';
 
-/** Gia tri hop le theo Swagger GetContentRequest. */
+/** Giá trị hợp lệ theo Swagger GetContentRequest. */
 export type ContentRefType = 'PROJECT' | 'PHASE';
 export type ContentType = 'OVERVIEW' | 'LOCATION' | 'POLICY';
 
-/** Query params cua GET /portal/contents/get. */
+/** Query params của GET /portal/contents/get. */
 export interface GetContentParams {
   refId: number;
   refType: ContentRefType;
@@ -17,10 +17,10 @@ export interface ContentResponse {
   refId: number;
   refType: string;
   contentType: string;
-  /** HTML tu trinh soan thao CMS — BAT BUOC sanitize truoc khi render */
+  /** HTML từ trình soạn thảo CMS — BẮT BUỘC sanitize trước khi render */
   content: string | null;
-  /** Dung cho contentType LOCATION (nhung ban do), POLICY khong dung */
+  /** Dùng cho contentType LOCATION (nhúng bản đồ), POLICY không dùng */
   embedLocation: string | null;
-  /** Anh da upload — trung voi anh da nhung trong `content`, khong render lai */
+  /** Ảnh đã upload — trùng với ảnh đã nhúng trong `content`, không render lại */
   fileInfoList: FileInfo[] | null;
 }

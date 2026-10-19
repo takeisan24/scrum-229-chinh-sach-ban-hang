@@ -13,7 +13,7 @@ import ProjectTabs from './ProjectTabs';
 import ShareButton from './ShareButton';
 import { HEADER_HEIGHT } from './SiteHeader';
 
-/** Du lieu trang can — map tu API (xem ProjectDetailMui). */
+/** Dữ liệu trang cần — map từ API (xem ProjectDetailMui). */
 export interface ProjectViewModel {
   name: string;
   description: string;
@@ -21,9 +21,9 @@ export interface ProjectViewModel {
 }
 
 interface ProjectViewProps {
-  /** null = dang tai -> hien skeleton */
+  /** null = đang tải -> hiện skeleton */
   project: ProjectViewModel | null;
-  /** Noi dung tab chinh sach — chi duoc goi khi mo tab lan dau */
+  /** Nội dung tab chính sách — chỉ được gọi khi mở tab lần đầu */
   renderPolicy: () => ReactNode;
 }
 
@@ -31,7 +31,7 @@ export default function ProjectView({ project, renderPolicy }: ProjectViewProps)
   const [activeTab, setActiveTab] = useHashTab();
   const tabsRef = useRef<HTMLDivElement>(null);
 
-  // Chi tai chinh sach khi mo tab lan dau (noi dung co the nang ~800 KB), sau do giu lai khi doi tab.
+  // Chỉ tải chính sách khi mở tab lần đầu (nội dung có thể nặng ~800 KB), sau đó giữ lại khi đổi tab.
   const [policyOpened, setPolicyOpened] = useState(activeTab === POLICY_TAB_ID);
   if (activeTab === POLICY_TAB_ID && !policyOpened) setPolicyOpened(true);
 
@@ -73,7 +73,7 @@ export default function ProjectView({ project, renderPolicy }: ProjectViewProps)
               fontSize: { xs: 15, md: 17 },
               fontWeight: 500,
               lineHeight: 'normal',
-              // Figma web: mo ta mot dong, tran thi ...
+              // Figma web: mô tả một dòng, tràn thì ...
               whiteSpace: { md: 'nowrap' },
               overflow: { md: 'hidden' },
               textOverflow: { md: 'ellipsis' },
@@ -98,7 +98,7 @@ export default function ProjectView({ project, renderPolicy }: ProjectViewProps)
       <Box role="tabpanel" id={`tabpanel-${activeTab}`} aria-labelledby={`tab-${activeTab}`}>
         {policyOpened && <Box hidden={activeTab !== POLICY_TAB_ID}>{renderPolicy()}</Box>}
         {activeTab !== POLICY_TAB_ID && (
-          // Cac tab khac nam ngoai pham vi SCRUM-229
+          // Các tab khác nằm ngoài phạm vi SCRUM-229
           <Typography color="text.secondary" sx={{ py: 6, textAlign: 'center' }}>
             Nội dung tab “{activeLabel}” nằm ngoài phạm vi SCRUM-229.
           </Typography>

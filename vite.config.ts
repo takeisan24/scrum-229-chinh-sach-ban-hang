@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// API UAT chan CORS tu localhost (tra 403 voi Origin http://localhost) -> dev di qua proxy,
-// doi Origin thanh chinh domain API (UAT chap nhan, da kiem tra).
+// API UAT chặn CORS từ localhost (trả 403 với Origin http://localhost) -> khi dev đi qua proxy,
+// đổi Origin thành chính domain API (UAT chấp nhận, đã kiểm tra).
 const API_TARGET = 'https://api-uat.vinhomes.biz.vn'
 
 // https://vite.dev/config/

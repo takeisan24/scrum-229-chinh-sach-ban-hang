@@ -15,14 +15,14 @@ export default function ProjectTabs({ value, onChange }: ProjectTabsProps) {
       <Tabs
         value={value}
         onChange={(_event, next: ProjectTabId) => onChange(next)}
-        // Du cho: gian deu 7 tab. Thieu cho: cuon ngang, MUI tu cuon tab dang chon vao tam nhin.
+        // Đủ chỗ: giãn đều 7 tab. Thiếu chỗ: cuộn ngang, MUI tự cuộn tab đang chọn vào tầm nhìn.
         variant="scrollable"
         scrollButtons={false}
         aria-label="Thông tin dự án"
         sx={{
           minHeight: 0,
           '& .MuiTabs-indicator': { display: 'none' },
-          // MUI v9 doi ten class `MuiTabs-flexContainer` -> `MuiTabs-list`
+          // MUI v9 đổi tên class `MuiTabs-flexContainer` -> `MuiTabs-list`
           '& .MuiTabs-list': { gap: { xs: 2, md: 3 }, justifyContent: 'space-between' },
         }}
       >
@@ -52,7 +52,7 @@ export default function ProjectTabs({ value, onChange }: ProjectTabsProps) {
               '&.Mui-selected': {
                 color: colors.primary100,
                 fontWeight: 600,
-                // Figma: web nen primary dac, mobile nen primary 50%
+                // Figma: web nền primary đặc, mobile nền primary 50%
                 bgcolor: { xs: ACTIVE_TAB_BG_MOBILE, md: colors.primary },
               },
             }}

@@ -1,4 +1,4 @@
-/** Khung response chung cua BE Hovixi (Swagger: BaseResponse*). */
+/** Khung response chung của BE Hovixi (Swagger: BaseResponse*). */
 export interface BaseResponse<T> {
   code: string;
   message: string;
@@ -7,7 +7,7 @@ export interface BaseResponse<T> {
   data: T | null;
 }
 
-/** Swagger: FileInfoResponse — chi giu cac truong FE dung. */
+/** Swagger: FileInfoResponse — chỉ giữ các trường FE dùng. */
 export interface FileInfo {
   id: number;
   originalName: string;

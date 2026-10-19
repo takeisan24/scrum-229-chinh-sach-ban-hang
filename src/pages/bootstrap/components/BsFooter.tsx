@@ -15,7 +15,7 @@ export default function BsFooter() {
   return (
     <footer className="bs-footer">
       <div className="d-flex flex-column flex-md-row justify-content-between gap-4 gap-md-3">
-        {/* Cot 1: logo, slogan, lien he */}
+        {/* Cột 1: logo, slogan, liên hệ */}
         <div className="bs-footer-col-1 d-flex flex-column gap-3">
           <img src={logoFooter} alt="" width={40} height={40} />
           <p className="bs-tagline">{FOOTER_TAGLINE}</p>
@@ -31,7 +31,7 @@ export default function BsFooter() {
           </ul>
         </div>
 
-        {/* Cot 2: danh muc + mang xa hoi */}
+        {/* Cột 2: danh mục + mạng xã hội */}
         <div className="bs-footer-col-2 d-flex flex-column justify-content-center gap-3 gap-md-4">
           <div>
             <p className="bs-footer-heading">Danh mục</p>
@@ -55,7 +55,7 @@ export default function BsFooter() {
           </div>
         </div>
 
-        {/* Cot 3: ban do — bam mo Google Maps */}
+        {/* Cột 3: bản đồ — bấm mở Google Maps */}
         <a href={FOOTER_MAP_URL} target="_blank" rel="noopener noreferrer" aria-label="Xem bản đồ" className="bs-map">
           <img src={footerMap} alt="" />
         </a>

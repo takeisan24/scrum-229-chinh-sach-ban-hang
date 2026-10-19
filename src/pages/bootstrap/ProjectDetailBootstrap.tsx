@@ -14,12 +14,12 @@ import BsTabs from './components/BsTabs';
 import './bootstrap-page.css';
 
 /**
- * Ban Bootstrap — UI tinh theo dung Figma (du lieu tu src/data/mockProject.ts, khong goi API).
- * Hanh vi giong ban MUI: tab theo hash, nut Chia se, noi dung chinh sach qua PolicyContent dung chung.
+ * Bản Bootstrap — UI tĩnh theo đúng Figma (dữ liệu từ src/data/mockProject.ts, không gọi API).
+ * Hành vi giống bản MUI: tab theo hash, nút Chia sẻ, nội dung chính sách qua PolicyContent dùng chung.
  */
 export default function ProjectDetailBootstrap() {
   const cssReady = useBootstrapStylesheet();
-  // Cho CSS Bootstrap tai xong moi render de khong nhay giao dien
+  // Chờ CSS Bootstrap tải xong mới render để không nháy giao diện
   return cssReady ? <BootstrapPage /> : null;
 }
 
@@ -60,7 +60,7 @@ function BootstrapPage() {
           {activeTab === POLICY_TAB_ID ? (
             <PolicyContent html={MOCK_POLICY_HTML} imageAlt={`Chính sách bán hàng – ${project.name}`} />
           ) : (
-            // Cac tab khac nam ngoai pham vi SCRUM-229
+            // Các tab khác nằm ngoài phạm vi SCRUM-229
             <p className="bs-tab-placeholder">Nội dung tab “{activeLabel}” nằm ngoài phạm vi SCRUM-229.</p>
           )}
         </div>

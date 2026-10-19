@@ -6,7 +6,7 @@ interface BsTabsProps {
   onChange: (value: ProjectTabId) => void;
 }
 
-/** Thanh tab dang nav-pills cua Bootstrap. Mobile cuon ngang, tu dua tab dang chon vao giua. */
+/** Thanh tab dạng nav-pills của Bootstrap. Mobile cuộn ngang, tự đưa tab đang chọn vào giữa. */
 export default function BsTabs({ value, onChange }: BsTabsProps) {
   const listRef = useRef<HTMLUListElement>(null);
 

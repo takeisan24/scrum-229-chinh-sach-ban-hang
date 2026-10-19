@@ -6,7 +6,7 @@ import { muiTheme } from '../theme';
 import SiteFooter from './SiteFooter';
 import SiteHeader from './SiteHeader';
 
-/** Khung trang theo Figma: header + vung noi dung (toi da 1440px, le 24/16px) + footer. */
+/** Khung trang theo Figma: header + vùng nội dung (tối đa 1440px, lề 24/16px) + footer. */
 export default function PageShell({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider theme={muiTheme}>

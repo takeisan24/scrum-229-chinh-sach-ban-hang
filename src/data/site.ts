@@ -8,8 +8,8 @@ import social4 from '../assets/figma/social-4.svg';
 import social5 from '../assets/figma/social-5.svg';
 
 /**
- * Noi dung header/footer theo Figma. Link dich chua co (ngoai pham vi SCRUM-229)
- * nen tro tam ve trang du an — xem route `*` trong App.
+ * Nội dung header/footer theo Figma. Link đích chưa có (ngoài phạm vi SCRUM-229)
+ * nên trỏ tạm về trang dự án — xem route `*` trong App.
  */
 export const ONLINE_COUNT = 100;
 
@@ -37,7 +37,7 @@ export const FOOTER_CATEGORIES = [
   { label: 'Liên hệ', href: '/lien-he' },
 ] as const;
 
-/** Thu tu icon theo Figma: Facebook, YouTube, Instagram, TikTok, X. */
+/** Thứ tự icon theo Figma: Facebook, YouTube, Instagram, TikTok, X. */
 export const SOCIAL_LINKS = [
   { icon: social1, label: 'Facebook', href: 'https://www.facebook.com' },
   { icon: social2, label: 'YouTube', href: 'https://www.youtube.com' },
@@ -47,8 +47,8 @@ export const SOCIAL_LINKS = [
 ] as const;
 
 /**
- * Mo ta ngan duoi ten du an — SCRUM-10 quy dinh cau co dinh + ten du an
- * (khong lay shortDescription cua API). Dau cham cuoi theo Figma.
+ * Mô tả ngắn dưới tên dự án — SCRUM-10 quy định câu cố định + tên dự án
+ * (không lấy shortDescription của API). Dấu chấm cuối theo Figma.
  */
 export function projectDescription(projectName: string): string {
   return `Theo dõi thông tin chi tiết và bảng giá, mặt bằng, tiến độ và chính sách bán hàng dự án ${projectName}.`;

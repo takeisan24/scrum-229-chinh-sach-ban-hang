@@ -1,6 +1,6 @@
 /*
- * Style rieng ban Bootstrap — moi selector deu nam duoi .bs-page de khong anh huong ban MUI.
- * So do lay tu Figma (web 1440 / mobile 402), mau tu src/constants/designTokens.ts.
+ * Style riêng bản Bootstrap — mọi selector đều nằm dưới .bs-page để không ảnh hưởng bản MUI.
+ * Số đo lấy từ Figma (web 1440 / mobile 402), màu từ src/constants/designTokens.ts.
  */
 .bs-page {
   --brand-gradient: linear-gradient(90deg, #2a52be 0%, #00b4d8 100%);
@@ -49,7 +49,7 @@
   background: var(--brand-gradient);
 }
 
-/* Noi dung chinh */
+/* Nội dung chính */
 .bs-page .bs-main {
   max-width: 1440px;
   margin: 0 auto;
@@ -109,7 +109,7 @@
   font-size: 15px;
   font-weight: 500;
   white-space: nowrap;
-  /* Figma mobile: nut rong het hang; web: vua noi dung (xem media query) */
+  /* Figma mobile: nút rộng hết hàng; web: vừa nội dung (xem media query) */
   width: 100%;
 }
 
@@ -175,7 +175,7 @@
   background: #008ca8;
 }
 
-/* Anh trong noi dung chinh sach: bo goc 8px theo Figma (chi ban Bootstrap — ban MUI hien dung nhu CMS tra ve) */
+/* Ảnh trong nội dung chính sách: bo góc 8px theo Figma (chỉ bản Bootstrap — bản MUI hiện đúng như CMS trả về) */
 .bs-page .policy-content img {
   border-radius: 8px;
 }
@@ -219,7 +219,7 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* Figma: mobile nen primary 50%, web nen primary dac */
+/* Figma: mobile nền primary 50%, web nền primary đặc */
 .bs-page .bs-tabs .nav-link.active {
   background: rgba(42, 82, 190, 0.5);
   color: var(--brand-primary-100);

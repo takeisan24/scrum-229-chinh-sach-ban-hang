@@ -5,7 +5,7 @@ interface BsBannerProps {
   alt: string;
 }
 
-/** Banner carousel (scroll-snap, dung chung logic voi ban MUI). Cham bam de chuyen anh. */
+/** Banner carousel (scroll-snap, dùng chung logic với bản MUI). Chấm bấm để chuyển ảnh. */
 export default function BsBanner({ images, alt }: BsBannerProps) {
   const { trackRef, active, onScroll, goTo } = useSnapCarousel();
 

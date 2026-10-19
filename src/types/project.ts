@@ -1,10 +1,10 @@
 import type { FileInfo } from './api';
 
-/** Mot du an trong ket qua GET /portal/projects/search — chi giu cac truong FE dung. */
+/** Một dự án trong kết quả GET /portal/projects/search — chỉ giữ các trường FE dùng. */
 export interface Project {
   id: number;
   code: string;
   name: string;
-  /** Anh dai dien du an — dung lam banner */
+  /** Ảnh đại diện dự án — dùng làm banner */
   fileInfo: FileInfo | null;
 }

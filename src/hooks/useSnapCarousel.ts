@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 
 /**
- * Logic carousel bang CSS scroll-snap (vuot duoc tren mobile, khong can thu vien).
- * Track can: overflow-x auto + scroll-snap-type x mandatory; moi slide rong 100%.
+ * Logic carousel bằng CSS scroll-snap (vuốt được trên mobile, không cần thư viện).
+ * Track cần: overflow-x auto + scroll-snap-type x mandatory; mỗi slide rộng 100%.
  */
 export function useSnapCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);

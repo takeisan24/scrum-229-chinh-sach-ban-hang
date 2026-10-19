@@ -14,12 +14,12 @@ import PageShell from './components/PageShell';
 import PolicyPanel, { PolicySkeleton } from './components/PolicyPanel';
 import ProjectView, { type ProjectViewModel } from './components/ProjectView';
 
-/** Trang chi tiet du an ban MUI — du lieu that tu API UAT. */
+/** Trang chi tiết dự án bản MUI — dữ liệu thật từ API UAT. */
 export default function ProjectDetailMui() {
   const { slug = '' } = useParams();
   const { hash } = useLocation();
 
-  // Dua URL ve slug chuan (vd chu hoa, co dau) de link Chia se luon dung quy uoc.
+  // Đưa URL về slug chuẩn (vd chữ hoa, có dấu) để link Chia sẻ luôn đúng quy ước.
   const normalized = slugify(slug);
   if (normalized && normalized !== slug) {
     return <Navigate to={{ pathname: projectPath('mui', normalized), hash }} replace />;

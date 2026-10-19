@@ -3,8 +3,8 @@ import { BRAND_GRADIENT, colors } from '../constants/designTokens';
 import { UI_VERSIONS, type UiVersion } from '../lib/routes';
 
 /**
- * Nut noi chuyen qua lai ban MUI / Bootstrap, giu nguyen slug va tab (hash).
- * Style inline vi dung chung cho ca hai ban, khong phu thuoc thu vien UI.
+ * Nút nổi chuyển qua lại bản MUI / Bootstrap, giữ nguyên slug và tab (hash).
+ * Style inline vì dùng chung cho cả hai bản, không phụ thuộc thư viện UI.
  */
 export default function VersionSwitcher() {
   const { pathname, search, hash } = useLocation();
@@ -18,7 +18,7 @@ export default function VersionSwitcher() {
         position: 'fixed',
         right: 16,
         bottom: 16,
-        // Duoi Drawer MUI (1200), offcanvas/backdrop Bootstrap (1040+), toast -> khong bam duoc khi menu dang mo
+        // Dưới Drawer MUI (1200), offcanvas/backdrop Bootstrap (1040+), toast -> không bấm được khi menu đang mở
         zIndex: 1035,
         display: 'flex',
         gap: 4,

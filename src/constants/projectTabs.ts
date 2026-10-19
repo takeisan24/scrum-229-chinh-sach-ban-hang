@@ -7,9 +7,9 @@ import iconMap from '../assets/figma/icon-map.svg';
 import iconMapPin from '../assets/figma/icon-map-pin.svg';
 
 /**
- * Cac tab cua trang chi tiet du an. `id` cung la hash tren URL (vd `#chinh-sach-ban-hang`).
- * Icon export tu Figma. Rieng tab "Chinh sach ban hang": Figma mobile dung icon Lock,
- * web dung File_Check — thong nhat dung File_Check cho ca hai.
+ * Các tab của trang chi tiết dự án. `id` cũng là hash trên URL (vd `#chinh-sach-ban-hang`).
+ * Icon export từ Figma. Riêng tab "Chính sách bán hàng": Figma mobile dùng icon Lock,
+ * web dùng File_Check — thống nhất dùng File_Check cho cả hai.
  */
 export const PROJECT_TABS = [
   { id: 'tong-quan', label: 'Tổng quan', icon: iconMainComponent },

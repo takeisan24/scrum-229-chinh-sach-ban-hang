@@ -1,14 +1,14 @@
 import { POLICY_TAB_ID } from '../constants/projectTabs';
 
-/** Link du an hien tai (theo slug tren URL) kem anchor tab chinh sach ban hang. */
+/** Link dự án hiện tại (theo slug trên URL) kèm anchor tab chính sách bán hàng. */
 export function buildPolicyShareUrl(): string {
   const { origin, pathname } = window.location;
   return `${origin}${pathname}#${POLICY_TAB_ID}`;
 }
 
 /**
- * Copy text vao clipboard. `navigator.clipboard` chi co tren HTTPS/localhost,
- * nen fallback sang textarea + execCommand cho moi truong HTTP (vd test qua IP LAN).
+ * Copy text vào clipboard. `navigator.clipboard` chỉ có trên HTTPS/localhost,
+ * nên fallback sang textarea + execCommand cho môi trường HTTP (vd test qua IP LAN).
  */
 export async function copyToClipboard(text: string): Promise<boolean> {
   if (navigator.clipboard && window.isSecureContext) {
@@ -16,11 +16,11 @@ export async function copyToClipboard(text: string): Promise<boolean> {
       await navigator.clipboard.writeText(text);
       return true;
     } catch {
-      // Bi chan quyen -> thu cach cu ben duoi
+      // Bị chặn quyền -> thử cách cũ bên dưới
     }
   }
 
-  // Fallback lay focus vao textarea -> nho phan tu dang focus (nut Chia se) de tra lai sau khi copy
+  // Fallback lấy focus vào textarea -> nhớ phần tử đang focus (nút Chia sẻ) để trả lại sau khi copy
   const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   const textarea = document.createElement('textarea');
   textarea.value = text;
@@ -29,7 +29,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
   textarea.style.opacity = '0';
   document.body.appendChild(textarea);
   textarea.select();
-  textarea.setSelectionRange(0, text.length); // iOS Safari can chon vung ro rang
+  textarea.setSelectionRange(0, text.length); // iOS Safari cần chọn vùng rõ ràng
   try {
     return document.execCommand('copy');
   } catch {

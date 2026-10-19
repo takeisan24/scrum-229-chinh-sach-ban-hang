@@ -10,10 +10,10 @@ interface BannerCarouselProps {
 }
 
 /**
- * Carousel bang CSS scroll-snap: vuot duoc tren mobile ma khong can thu vien.
- * Cham chi bao vi tri + bam de chuyen anh. Khong tu chay (Figma khong yeu cau).
- * Du an chua co anh (4/10 du an tren UAT): van giu khung cung ty le + logo, de layout khong giat
- * va link chia se van cuon dung toi thanh tab.
+ * Carousel bằng CSS scroll-snap: vuốt được trên mobile mà không cần thư viện.
+ * Chấm chỉ báo vị trí + bấm để chuyển ảnh. Không tự chạy (Figma không yêu cầu).
+ * Dự án chưa có ảnh (4/10 dự án trên UAT): vẫn giữ khung cùng tỷ lệ + logo, để layout không giật
+ * và link chia sẻ vẫn cuộn đúng tới thanh tab.
  */
 export default function BannerCarousel({ images, alt }: BannerCarouselProps) {
   const { trackRef, active, onScroll: handleScroll, goTo } = useSnapCarousel();
@@ -23,9 +23,9 @@ export default function BannerCarousel({ images, alt }: BannerCarouselProps) {
       sx={{
         position: 'relative',
         width: '100%',
-        // Ty le khung banner tren Figma: 1392x725 (web) va 370x192.7 (mobile) — cung ~1.92
+        // Tỷ lệ khung banner trên Figma: 1392x725 (web) và 370x192.7 (mobile) — cùng ~1.92
         aspectRatio: '1392 / 725',
-        // Figma: 8px mobile / 16px web (chuoi px — so trong sx bi nhan voi shape.borderRadius 8px)
+        // Figma: 8px mobile / 16px web (chuỗi px — số trong sx bị nhân với shape.borderRadius 8px)
         borderRadius: { xs: '8px', md: '16px' },
         overflow: 'hidden',
         bgcolor: BANNER_PLACEHOLDER_BG,

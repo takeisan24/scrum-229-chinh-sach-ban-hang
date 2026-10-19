@@ -1,20 +1,20 @@
 /*
- * Hien thi HTML chinh sach tu trinh soan thao CMS — dung chung cho ban MUI va Bootstrap.
- * Khong dat mau/size/can le o day de khong de len style inline cua admin;
- * chi chan nhung thu lam vo layout (anh, table tran ngang).
+ * Hiển thị HTML chính sách từ trình soạn thảo CMS — dùng chung cho bản MUI và Bootstrap.
+ * Không đặt màu/size/căn lề ở đây để không đè lên style inline của admin;
+ * chỉ chặn những thứ làm vỡ layout (ảnh, table tràn ngang).
  */
 .policy-content {
-  /* Figma: vung noi dung rong 1200px, can giua */
+  /* Figma: vùng nội dung rộng 1200px, căn giữa */
   max-width: 1200px;
   margin: 0 auto;
   color: #38393d;
   font-size: 16px;
   line-height: 1.7;
-  /* overflow-wrap (khong dung word-break): van ngat link qua dai nhung khong ep table be tung ky tu */
+  /* overflow-wrap (không dùng word-break): vẫn ngắt link quá dài nhưng không ép table bẻ từng ký tự */
   overflow-wrap: break-word;
 }
 
-/* Dang tai anh: giu toi thieu 1 man hinh de footer khong bi day xuong lien tuc (CLS) */
+/* Đang tải ảnh: giữ tối thiểu 1 màn hình để footer không bị đẩy xuống liên tục (CLS) */
 .policy-content.is-loading-media {
   min-height: 100vh;
 }
@@ -37,7 +37,7 @@
 
 .policy-content img {
   max-width: 100%;
-  /* CMS gan height="100%" — ep auto de anh khong bi meo */
+  /* CMS gán height="100%" — ép auto để ảnh không bị méo */
   height: auto !important;
 }
 
@@ -56,7 +56,7 @@
   text-decoration: underline;
 }
 
-/* sanitizeHtml boc moi table trong khung nay (TABLE_WRAPPER_CLASS): table rong cuon ngang thay vi day vo trang */
+/* sanitizeHtml bọc mỗi table trong khung này (TABLE_WRAPPER_CLASS): table rộng cuộn ngang thay vì đẩy vỡ trang */
 .policy-content .cms-table-wrap {
   max-width: 100%;
   margin: 16px 0;

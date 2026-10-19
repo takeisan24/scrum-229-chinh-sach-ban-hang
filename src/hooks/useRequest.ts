@@ -6,8 +6,8 @@ export type RequestState<T> =
   | { status: 'error'; error: unknown };
 
 /**
- * Goi API khi `key` doi, huy request cu khi doi trang/unmount. `retry` de nut "Thu lai".
- * `request` phai nhan AbortSignal.
+ * Gọi API khi `key` đổi, huỷ request cũ khi đổi trang/unmount. `retry` dùng cho nút "Thử lại".
+ * `request` phải nhận AbortSignal.
  */
 export function useRequest<T>(key: unknown, request: (signal: AbortSignal) => Promise<T>) {
   const [state, setState] = useState<RequestState<T>>({ status: 'loading' });
@@ -24,7 +24,7 @@ export function useRequest<T>(key: unknown, request: (signal: AbortSignal) => Pr
         if (!controller.signal.aborted) setState({ status: 'error', error });
       });
     return () => controller.abort();
-    // `request` la closure moi moi lan render — chi chay lai khi key/attempt doi
+    // `request` là closure mới mỗi lần render — chỉ chạy lại khi key/attempt đổi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key, attempt]);
 

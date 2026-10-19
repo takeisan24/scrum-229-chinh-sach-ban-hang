@@ -39,7 +39,7 @@ export default function SiteFooter() {
           gap: { xs: 4, md: 3 },
         }}
       >
-        {/* Cot 1: logo, slogan, lien he */}
+        {/* Cột 1: logo, slogan, liên hệ */}
         <Box sx={{ width: { md: 373 }, display: 'flex', flexDirection: 'column', gap: 2 }}>
           <img src={logoFooter} alt="" width={40} height={40} />
           <Typography sx={{ fontSize: { xs: 15, md: 17 }, fontWeight: 600, lineHeight: '26px', color: colors.grey100 }}>
@@ -62,7 +62,7 @@ export default function SiteFooter() {
           </Box>
         </Box>
 
-        {/* Cot 2: danh muc + mang xa hoi */}
+        {/* Cột 2: danh mục + mạng xã hội */}
         <Box sx={{ width: { md: 280 }, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: { xs: 2, md: 4 } }}>
           <Box>
             <Typography sx={headingSx}>Danh mục</Typography>
@@ -93,13 +93,13 @@ export default function SiteFooter() {
           </Box>
         </Box>
 
-        {/* Cot 3: ban do — bam mo Google Maps */}
+        {/* Cột 3: bản đồ — bấm mở Google Maps */}
         <Link
           href={FOOTER_MAP_URL}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Xem bản đồ"
-          // Figma: khung ban do 380x234 (web) / full x 234 (mobile) — anh goc vuong nen phai co dinh chieu cao
+          // Figma: khung bản đồ 380x234 (web) / full x 234 (mobile) — ảnh góc vuông nên phải cố định chiều cao
           sx={{ display: 'block', width: { xs: '100%', md: 380 }, height: 234, flexShrink: 0 }}
         >
           <Box

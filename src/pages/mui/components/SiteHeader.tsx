@@ -13,7 +13,7 @@ import { BRAND_GRADIENT, HEADER_SHADOW, colors } from '../../../constants/design
 import { MAIN_NAV, ONLINE_COUNT } from '../../../data/site';
 import { versionPath } from '../../../lib/routes';
 
-/** Chieu cao header — dung lam scroll-margin de tab khong bi header sticky che. */
+/** Chiều cao header — dùng làm scroll-margin để tab không bị header sticky che. */
 export const HEADER_HEIGHT = 70;
 
 const navLinkSx = {
@@ -45,7 +45,7 @@ export default function SiteHeader() {
         boxShadow: HEADER_SHADOW,
       }}
     >
-      {/* flex: 1 hai ben de menu giua luon nam chinh giua header */}
+      {/* flex: 1 hai bên để menu giữa luôn nằm chính giữa header */}
       <Box sx={{ flex: 1, display: 'flex' }}>
         <RouterLink to={versionPath('mui', '/')} aria-label="Trang chủ" style={{ display: 'flex' }}>
           <img src={logo} alt="" width={46} height={46} />

@@ -3,14 +3,14 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import VersionSwitcher from './components/VersionSwitcher';
 import { defaultProjectPath } from './lib/routes';
 
-// Tach code theo phien ban: vao ban nao chi tai code (va CSS) cua ban do — MUI khong tai Bootstrap va nguoc lai.
+// Tách code theo phiên bản: vào bản nào chỉ tải code (và CSS) của bản đó — MUI không tải Bootstrap và ngược lại.
 const ProjectDetailMui = lazy(() => import('./pages/mui/ProjectDetailMui'));
 const ProjectDetailBootstrap = lazy(() => import('./pages/bootstrap/ProjectDetailBootstrap'));
 
 /**
- * Hai ban giao dien song song:
- * - /mui/du-an/:slug — ban chinh, du lieu that tu API
- * - /bootstrap/du-an/:slug — UI tinh theo Figma
+ * Hai bản giao diện song song:
+ * - /mui/du-an/:slug — bản chính, dữ liệu thật từ API
+ * - /bootstrap/du-an/:slug — UI tĩnh theo Figma
  */
 export default function App() {
   return (
@@ -19,7 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/mui/du-an/:slug" element={<ProjectDetailMui />} />
           <Route path="/bootstrap/du-an/:slug" element={<ProjectDetailBootstrap />} />
-          {/* Cac trang khac (Gioi thieu, Tin tuc...) ngoai pham vi -> ve du an mac dinh, GIU NGUYEN phien ban */}
+          {/* Các trang khác (Giới thiệu, Tin tức...) ngoài phạm vi -> về dự án mặc định, GIỮ NGUYÊN phiên bản */}
           <Route path="/bootstrap/*" element={<Navigate to={defaultProjectPath('bootstrap')} replace />} />
           <Route path="*" element={<Navigate to={defaultProjectPath('mui')} replace />} />
         </Routes>

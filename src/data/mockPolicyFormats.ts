@@ -1,13 +1,13 @@
 import policyImage from '../assets/figma/policy-vinhomes-ocean-park-3.jpg';
 
 /**
- * HTML mau du cac dinh dang ma trinh soan thao admin tao ra — DU LIEU TEST, khong hien cho nguoi dung.
- * Thanh cong cu admin (Figma "Them moi phan khu" > tab Chinh sach, node 348:7830): co chu, mau,
- * B/I/U/S, can trai/giua/phai, list so/cham, anh, link. Them table vi Jira yeu cau va admin co the dan tu Word/Excel.
- * Viet theo dung kieu HTML trinh soan thao that sinh ra (doi chieu du an 7 tren UAT): style inline,
- * ky tu Viet ma hoa (&Aacute;...), anh width/height 100%.
+ * HTML mẫu đủ các định dạng mà trình soạn thảo admin tạo ra — DỮ LIỆU TEST, không hiện cho người dùng.
+ * Thanh công cụ admin (Figma "Thêm mới phân khu" > tab Chính sách, node 348:7830): cỡ chữ, màu,
+ * B/I/U/S, căn trái/giữa/phải, list số/chấm, ảnh, link. Thêm table vì Jira yêu cầu và admin có thể dán từ Word/Excel.
+ * Viết theo đúng kiểu HTML trình soạn thảo thật sinh ra (đối chiếu dự án 7 trên UAT): style inline,
+ * ký tự Việt mã hoá (&Aacute;...), ảnh width/height 100%.
  *
- * Dung de kiem tra local: tam render <PolicyContent html={FORMAT_DEMO_POLICY_HTML} /> hoac dung cho test sau nay.
+ * Dùng để kiểm tra local: tạm render <PolicyContent html={FORMAT_DEMO_POLICY_HTML} /> hoặc dùng cho test sau này.
  */
 export const FORMAT_DEMO_POLICY_HTML = `<h2 style="text-align: center;"><span style="color: #c0392b; font-size: 26px;"><strong>CH&Iacute;NH S&Aacute;CH B&Aacute;N H&Agrave;NG MẪU</strong></span></h2>
 <p style="text-align: center;"><em>(&Aacute;p dụng từ 01/10/2026 đến 31/12/2026 &ndash; dữ liệu giả)</em></p>

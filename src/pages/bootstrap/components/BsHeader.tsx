@@ -9,15 +9,15 @@ import { versionPath } from '../../../lib/routes';
 
 const MENU_ID = 'bs-mobile-menu';
 
-/** Header: menu giua tren web, offcanvas Bootstrap tren mobile (dieu khien bang React, khong can bootstrap.js). */
+/** Header: menu giữa trên web, offcanvas Bootstrap trên mobile (điều khiển bằng React, không cần bootstrap.js). */
 export default function BsHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Hanh vi dialog nhu Drawer ben MUI: Esc de dong, focus vao menu va giu trong menu,
-  // khoa cuon trang phia sau, dong thi tra focus ve nut mo menu.
+  // Hành vi dialog như Drawer bên MUI: Esc để đóng, focus vào menu và giữ trong menu,
+  // khoá cuộn trang phía sau, đóng thì trả focus về nút mở menu.
   useEffect(() => {
     if (!menuOpen) return;
     const panel = panelRef.current;
@@ -55,7 +55,7 @@ export default function BsHeader() {
   return (
     <>
       <header className="bs-header d-flex align-items-center px-3 px-md-4">
-        {/* flex-fill hai ben de menu giua luon nam chinh giua header */}
+        {/* flex-fill hai bên để menu giữa luôn nằm chính giữa header */}
         <div className="flex-fill d-flex">
           <Link to={versionPath('bootstrap', '/')} aria-label="Trang chủ" className="d-flex">
             <img src={logo} alt="" width={46} height={46} />
@@ -92,7 +92,7 @@ export default function BsHeader() {
         </div>
       </header>
 
-      {/* Offcanvas phai nam NGOAI header: header co backdrop-filter nen la khung chua cua phan tu fixed */}
+      {/* Offcanvas phải nằm NGOÀI header: header có backdrop-filter nên là khung chứa của phần tử fixed */}
       <div
         ref={panelRef}
         id={MENU_ID}
